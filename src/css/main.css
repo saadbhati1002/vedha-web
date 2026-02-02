@@ -12811,18 +12811,227 @@ section {
   margin-bottom: 50px;
 }
 
-/* Increase container spacing on mobile */
+/* Mobile Responsive Fixes */
 @media (max-width: 767px) {
+  /* Container padding */
+  .container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  
+  /* Hero section mobile fixes */
+  .hero {
+    padding-top: 80px !important;
+    padding-bottom: 60px !important;
+    min-height: auto !important;
+  }
+  
+  .hero-content {
+    padding: 0 10px;
+  }
+  
+  .hero-content .title {
+    font-size: 32px !important;
+    line-height: 42px !important;
+    margin-bottom: 20px !important;
+    padding: 0 10px;
+  }
+  
+  .hero-content .sub-title {
+    font-size: 15px !important;
+    line-height: 24px !important;
+    margin-bottom: 30px !important;
+    padding: 0 10px;
+  }
+  
+  /* Hero logo watermark - smaller on mobile */
+  .hero-logo-watermark {
+    width: 300px !important;
+    height: 300px !important;
+  }
+  
+  /* Section titles */
+  .sec-title {
+    margin-bottom: 40px !important;
+    padding: 0 10px;
+  }
+  
+  .sec-title .sub-title {
+    font-size: 14px !important;
+    margin-bottom: 15px !important;
+  }
+  
+  .sec-title .title {
+    font-size: 28px !important;
+    line-height: 36px !important;
+  }
+  
+  /* Service section mobile fixes */
+  .xb-service-item {
+    margin-bottom: 30px !important;
+  }
+  
+  .xb-service-item .xb-item--item {
+    padding: 40px 20px 50px !important;
+  }
+  
+  .xb-service-item .xb-item--title {
+    font-size: 24px !important;
+    line-height: 32px !important;
+    margin-bottom: 15px !important;
+  }
+  
+  .xb-service-item .xb-item--content {
+    font-size: 14px !important;
+    line-height: 22px !important;
+  }
+  
+  /* Project section mobile fixes */
+  .xb-project-item {
+    margin-bottom: 30px !important;
+    min-height: auto !important;
+  }
+  
+  .xb-project-content .xb-item--inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 40px 20px 50px !important;
+  }
+  
+  .xb-project-content .xb-item--title {
+    font-size: 24px !important;
+    line-height: 32px !important;
+    margin-bottom: 15px !important;
+  }
+  
+  .xb-project-content .xb-item--list {
+    font-size: 14px !important;
+    gap: 20px !important;
+    flex-direction: column !important;
+  }
+  
+  .xb-project-content .xb-item--desc {
+    font-size: 14px !important;
+    line-height: 22px !important;
+  }
+  
+  /* Feature section mobile fixes */
+  .xb-feature-item {
+    margin-bottom: 30px !important;
+  }
+  
+  .xb-feature-item .xb-item--inner {
+    padding: 40px 20px !important;
+  }
+  
+  /* Industries section mobile fixes */
+  .industries {
+    padding: 60px 0 !important;
+  }
+  
+  .xb-industries-item {
+    padding: 20px 15px !important;
+    min-width: 120px !important;
+  }
+  
+  .xb-industries-item .xb-icon {
+    width: 50px !important;
+    height: 50px !important;
+    margin-bottom: 10px !important;
+  }
+  
+  .xb-industries-item .xb-title {
+    font-size: 14px !important;
+  }
+  
+  /* Footer mobile fixes */
+  .footer {
+    padding: 60px 0 40px !important;
+  }
+  
+  .xb-footer-heading .title {
+    font-size: 120px !important;
+  }
+  
+  .xb-footer-heading .mail {
+    font-size: 18px !important;
+    padding: 12px 20px !important;
+    max-width: 90% !important;
+  }
+  
+  .xb-footer-bottom {
+    flex-direction: column !important;
+    gap: 20px !important;
+    text-align: center !important;
+    padding: 0 20px !important;
+  }
+  
+  .xb-footer-bottom .contact-item {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  
+  /* Buttons mobile fixes */
+  .thm-btn {
+    font-size: 14px !important;
+    padding: 12px 24px !important;
+  }
+  
+  .hero-btn {
+    margin-top: 20px !important;
+  }
+  
+  /* General spacing */
+  section {
+    padding: 60px 0 !important;
+  }
+  
+  .pt-200 {
+    padding-top: 60px !important;
+  }
+  
+  .pb-200 {
+    padding-bottom: 60px !important;
+  }
+  
+  .mb-80, .mb-100 {
+    margin-bottom: 40px !important;
+  }
+  
+  /* Row spacing */
+  .row {
+    margin-left: -10px !important;
+    margin-right: -10px !important;
+  }
+  
+  .row > * {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    margin-bottom: 20px !important;
+  }
+}
+
+/* Tablet fixes */
+@media (min-width: 768px) and (max-width: 991px) {
   .container {
     padding-left: 30px !important;
     padding-right: 30px !important;
   }
   
-  .sec-title {
-    margin-bottom: 60px !important;
+  .hero-content .title {
+    font-size: 42px !important;
+    line-height: 52px !important;
   }
   
-  .xb-item--inner {
-    padding: 40px 30px !important;
+  .hero-content .sub-title {
+    font-size: 18px !important;
+  }
+  
+  .xb-service-item .xb-item--item {
+    padding: 50px 30px 60px !important;
+  }
+  
+  .xb-project-content .xb-item--inner {
+    padding: 50px 30px 60px !important;
   }
 }

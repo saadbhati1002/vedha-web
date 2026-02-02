@@ -54,6 +54,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onOpenForm }) => {
         />
         {/* Subtle V logo watermark with fade-in animation */}
         <div
+          className="hero-logo-watermark"
           style={{
             position: 'absolute',
             top: '50%',
