@@ -1,26 +1,12 @@
 import React, { useEffect } from "react";
 
 // ✅ Import images
-import projectBg from "../../images/bg/project-bg.png";
-import gifRound from "../../images/icon/b10c3e43e836d32554bf.gif";
 import projectImg01 from "../../images/project/discover.jpg";
 import projectImg02 from "../../images/project/chart.jpg";
 import projectImg03 from "../../images/project/prove.jpg";
 import projectImg04 from "../../images/project/engineer.jpg";
 import projectImg05 from "../../images/project/scale.jpg";
 
-
-
-// ✅ Import icons
-import icon01 from "../../images/icon/project-icon01.svg";
-import icon02 from "../../images/icon/project-icon02.svg";
-import icon03 from "../../images/icon/project-icon03.svg";
-import icon08 from "../../images/icon/project-icon08.svg";
-import icon09 from "../../images/icon/project-icon09.svg";
-import icon10 from "../../images/icon/project-icon10.svg";
-import icon11 from "../../images/icon/project-icon11.svg";
-import icon12 from "../../images/icon/project-icon12.svg";
-import icon13 from "../../images/icon/project-icon13.svg";
 import { Link } from "react-router-dom";
 
 interface ProjectSectionProps {
