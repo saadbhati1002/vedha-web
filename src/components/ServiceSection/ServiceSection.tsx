@@ -65,6 +65,16 @@ const services: ServiceItem[] = [
 
 const ServiceSection: React.FC = () => {
   const [activeId, setActiveId] = useState<number>(1);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 600);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     // Apply very light gradient background using secondary dark color (#1A1B1F)
@@ -255,7 +265,8 @@ const ServiceSection: React.FC = () => {
             key={service.id}
             className={`xb-service-item xb-border xb-mouseenter ${activeId === service.id ? "active" : ""
               }`}
-            onMouseEnter={() => setActiveId(service.id)}
+            onMouseEnter={() => !isMobile && setActiveId(service.id)}
+            onClick={() => isMobile && setActiveId(activeId === service.id ? 0 : service.id)}
           >
             <div className="xb-item--inner">
               <div className="xb-item--item">

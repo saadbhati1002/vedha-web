@@ -6527,6 +6527,98 @@ Drop Down menu end
     .xb-service-wrap {
       flex-wrap: wrap; } }
 
+@media (max-width: 600px) {
+  .xb-service-wrap {
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+  }
+
+  .xb-service-item {
+    width: 100%;
+    flex: unset;
+    border-radius: 20px;
+  }
+
+  .xb-service-item .xb-item--inner {
+    padding: 35px 22px;
+  }
+
+  .xb-service-item .xb-item--title {
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    max-width: 100%;
+  }
+
+  .xb-service-item .xb-item--content {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .xb-service-item .xb-item--img img {
+    height: auto;
+    opacity: 0.9;
+  }
+
+  .service-vertical-text {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .xb-service-item {
+    flex: unset !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 30px !important;
+    overflow: hidden !important;
+    padding: 5px 10px !important;
+  }
+
+  .xb-service-item.active {
+    flex: unset !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 300px !important;
+    padding: 20px !important;
+  }
+
+  /* Show titles always, hide content and images by default */
+  .xb-service-item .xb-item--head-item {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .xb-service-item .xb-item--head-item .xb-item--title {
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1.1 !important;
+  }
+
+  .xb-service-item .xb-item--content,
+  .xb-service-item .xb-item--img {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(30px);
+    height: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Show content and images only when active */
+  .xb-service-item.active .xb-item--content,
+  .xb-service-item.active .xb-item--img {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    height: auto;
+    margin: revert;
+    padding: revert;
+  }
+}
+
 .service-vertical-text {
   transition: all 0.3s ease; }
   @media (max-width: 767px) {

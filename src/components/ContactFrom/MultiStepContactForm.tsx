@@ -162,7 +162,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
           meetingType: formData.meetingType,
           date: formData.date,
           time: formData.time,
-          toAddress: 'krishnandwana@gmail.com',
+          toAddress: 'info@vedha.ae',
           subject: 'Vedha site contact request',
         }),
       });
