@@ -4,7 +4,7 @@
   width: 100%;
   background: #030409;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding: 60px 16px 120px;
   overflow: hidden;
@@ -60,6 +60,7 @@
   background: rgba(10, 10, 18, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+  max-width: 900px;
 }
 
 .multi-step-form-page {
@@ -67,12 +68,23 @@
 }
 
 @media (max-width: 768px) {
-  .contact-page {
-    padding: 40px 12px 80px;
-  }
+    .contact-page {
+      padding: 40px 12px 80px;
+    }
 
   .contact-form-shell {
     padding: 16px;
     border-radius: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-page {
+    padding: 30px 10px 50px;
+  }
+
+  .contact-form-shell {
+    padding: 14px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
   }
 }

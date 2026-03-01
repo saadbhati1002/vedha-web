@@ -45,10 +45,12 @@ const services = [
   "Cybersecurity",
   "DevOps & Infrastructure",
   "Blockchain Solutions",
-  "IoT Development",
   "AR/VR Development",
-  "Machine Learning & AI",
 ];
+
+const apiBaseUrl =
+  process.env.REACT_APP_API_BASE_URL ||
+  "http://localhost:3001";
 
 const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
   isOpen = true,
@@ -64,6 +66,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
   const [formData, setFormData] = useState<FormData>(() =>
     getInitialFormData(preselectedService || "")
   );
+  const [stepError, setStepError] = useState("");
 
   const countryCodes = [
     { code: "+971", country: "UAE" },
@@ -98,10 +101,37 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setStepError("");
+  };
+
+  const isValidEmail = (email: string) => {
+    const normalizedEmail = email.trim().toLowerCase();
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail);
+  };
+
+  const isGmailAddress = (email: string) => {
+    return email.trim().toLowerCase().endsWith("@gmail.com");
+  };
+
+  const isValidPhone = (value: string) => {
+    const cleaned = value.replace(/\D/g, "");
+    return cleaned.length === 10;
   };
 
   const handleNext = () => {
+    if (currentStep === 2) {
+      if (!isValidEmail(formData.email) || !isGmailAddress(formData.email)) {
+        setStepError("Please enter a valid Gmail address.");
+        return;
+      }
+      if (!isValidPhone(formData.phone)) {
+        setStepError("Please enter a 10-digit phone number.");
+        return;
+      }
+    }
+
     if (currentStep < 3) {
+      setStepError("");
       setCurrentStep((prev) => prev + 1);
     }
   };
@@ -109,6 +139,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
   const handleBack = () => {
     if (currentStep > 1) {
       setCurrentStep((prev) => prev - 1);
+      setStepError("");
     }
   };
 
@@ -117,7 +148,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
     
     try {
       // Send email via API
-      const response = await fetch('http://localhost:3001/api/send-email', {
+      const response = await fetch(`${apiBaseUrl}/api/send-email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -202,10 +233,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
   const formWrapperStyle: React.CSSProperties = {
     width: "100%",
     maxWidth: "900px",
-    backgroundColor: "#1A1B1F",
-    borderRadius: "20px",
-    padding: "40px",
-    boxShadow: "0 25px 80px rgba(0, 0, 0, 0.35)",
+    boxSizing: "border-box",
     transform: isAnimating ? "translateY(0)" : "translateY(30px)",
     transition: "transform 0.4s ease-out",
   };
@@ -386,7 +414,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
           </div>
         )}
         {closeButtonElement}
-        <div style={formWrapperStyle}>
+        <div style={formWrapperStyle} className="multi-step-form-wrapper">
           {!isModalMode && (
             <div style={pageProgressBarWrapperStyle}>
               <div style={progressIndicatorStyle} />
@@ -395,15 +423,17 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
           <h2
             key={currentStep}
             style={{
-              fontSize: "72px",
+              fontSize: "clamp(2rem, 5vw, 3.8rem)",
+              lineHeight: 1.2,
               fontWeight: "300",
               color: "#fff",
-              marginBottom: "60px",
+              marginBottom: "50px",
               textAlign: "left",
               fontFamily: "var(--font-heading)",
               letterSpacing: "-0.02em",
               transition: "opacity 0.3s ease-in-out, transform 0.3s ease-in-out",
               animation: "fadeIn 0.3s ease-in-out",
+              wordBreak: "break-word",
             }}
           >
             {currentStep === 1 && "Let's understand the problem!"}
@@ -412,6 +442,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
           </h2>
 
           <form onSubmit={handleSubmit}>
+            {stepError && <p className="form-error">{stepError}</p>}
             {/* Step 1: Service and Problem */}
             {currentStep === 1 && (
               <div
