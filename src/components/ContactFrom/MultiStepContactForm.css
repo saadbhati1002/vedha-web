@@ -1,0 +1,33 @@
+.meeting-details-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.meeting-input {
+  width: 100%;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 16px;
+  font-family: var(--font-body);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.meeting-input:focus {
+  border-color: #e5ff00;
+}
+
+@media (min-width: 768px) {
+  .meeting-details-grid {
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .meeting-details-grid > div {
+    flex: 1;
+  }
+}

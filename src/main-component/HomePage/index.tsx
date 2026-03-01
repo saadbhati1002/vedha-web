@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect } from "react";
 import HeroSection from "../../components/hero/Hero";
 import ServiceSection from "../../components/ServiceSection/ServiceSection";
 import FeatureSection from "../../components/FeatureSection/FeatureSection";
@@ -7,32 +7,23 @@ import ProjectSection from "../../components/ProjectSection/ProjectSection";
 import IndustriesSection from "../../components/Industries/Industries";
 import Footer from "../../components/footer/Footer";
 import Scrollbar from "../../components/scrollbar/scrollbar";
-import MultiStepContactForm from "../../components/ContactFrom/MultiStepContactForm";
 
 
 const HomePage: React.FC = () => {
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [preselectedService, setPreselectedService] = useState<string | undefined>(undefined);
-
   useEffect(() => {
     document.title = "Home | AI Agency & Technology React Template";
   }, []);
-
-  const handleServiceClick = (serviceTitle: string) => {
-    setPreselectedService(serviceTitle);
-    setIsFormOpen(true);
-  };
 
   return (
     <Fragment>
         <div className='ai-agency'>
           <div className="body_wrap o-clip">
             <main>
-              <HeroSection onOpenForm={() => setIsFormOpen(true)}/>
+              <HeroSection />
               {/* <AboutSection/> */}
-              <ServiceSection onServiceClick={handleServiceClick}/>
+              <ServiceSection />
               <FeatureSection/>
-              <ProjectSection onOpenForm={() => setIsFormOpen(true)}/>
+              <ProjectSection />
               {/* <IndustriesMarqueeSection/> */}
               <IndustriesSection/>
               {/* <ContactSection/> */}
@@ -43,14 +34,6 @@ const HomePage: React.FC = () => {
             <Scrollbar />
           </div>
         </div>
-        <MultiStepContactForm 
-          isOpen={isFormOpen} 
-          onClose={() => {
-            setIsFormOpen(false);
-            setPreselectedService(undefined);
-          }}
-          preselectedService={preselectedService}
-        />
     </Fragment>
   );
 };

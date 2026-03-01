@@ -24,50 +24,46 @@ const services: ServiceItem[] = [
     title: "AI SaaS Products",
     desc: "Use AI to target audiences, personalize campaigns, and analyze data for better engagement and results.",
     img: img01,
-    link: "/service-details",
+    link: "/contact",
   },
   {
     id: 2,
     title: "Technology Development",
     desc: "We turn complex ideas into clear, launchable products using AI and advanced analytics—empowering smarter decisions.",
     img: img02,
-    link: "/service-details",
+    link: "/contact",
   },
   {
     id: 3,
     title: "Ecommerce Development",
     desc: "We create intelligent chatbots and virtual assistants that improve customer support and automate interactions 24/7.",
     img: img03,
-    link: "/service-details",
+    link: "/contact",
   },
   {
     id: 4,
     title: "Branding and Identity",
     desc: "Shaping brands that look good, feel right, and stand out.",
     img: img04,
-    link: "/service-details",
+    link: "/contact",
   },
   {
     id: 5,
     title: "Technology Consulting",
     desc: "We guide businesses in adopting AI strategies, optimizing processes, and integrating technologies for lasting success.",
     img: img05,
-    link: "/service-details",
+    link: "/contact",
   },
   {
     id: 6,
     title: "Content & Marketing",
     desc: "Creating strategic content and marketing campaigns that engage audiences, strengthen brands, and drive measurable growth.",
     img: img06,
-    link: "/service-details",
+    link: "/contact",
   },
 ];
 
-interface ServiceSectionProps {
-  onServiceClick?: (serviceTitle: string) => void;
-}
-
-const ServiceSection: React.FC<ServiceSectionProps> = ({ onServiceClick }) => {
+const ServiceSection: React.FC = () => {
   const [activeId, setActiveId] = useState<number>(1);
 
   useEffect(() => {
@@ -265,24 +261,11 @@ const ServiceSection: React.FC<ServiceSectionProps> = ({ onServiceClick }) => {
               <div className="xb-item--item">
                 <div className="xb-item--head-item">
                   <h3 className="xb-item--title border-effect">
-                    <Link 
-                      to={service.link}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        onServiceClick?.(service.title);
-                      }}
-                    >
+                    <Link to={service.link}>
                       {service.title}
                     </Link>
                   </h3>
-                  <Link 
-                    className="xb-item--icon" 
-                    to={service.link}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onServiceClick?.(service.title);
-                    }}
-                  >
+                  <Link className="xb-item--icon" to={service.link}>
                     <img src={arrowIcon} alt="arrow" />
                   </Link>
                 </div>
@@ -290,14 +273,7 @@ const ServiceSection: React.FC<ServiceSectionProps> = ({ onServiceClick }) => {
                 <div className="img-hove-effect">
                   <div className="xb-item--img xb-img">
                     {[...Array(4)].map((_, i) => (
-                      <Link 
-                        to={service.link} 
-                        key={i}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          onServiceClick?.(service.title);
-                        }}
-                      >
+                      <Link to={service.link} key={i}>
                         <img src={service.img} alt={service.title} />
                       </Link>
                     ))}
@@ -307,24 +283,11 @@ const ServiceSection: React.FC<ServiceSectionProps> = ({ onServiceClick }) => {
 
               <div className="service-vertical-text">
                 <h3 className="xb-item--title">
-                  <Link 
-                    to={service.link}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onServiceClick?.(service.title);
-                    }}
-                  >
+                  <Link to={service.link}>
                     {service.title}
                   </Link>
                 </h3>
-                <Link 
-                  className="xb-icon" 
-                  to={service.link}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onServiceClick?.(service.title);
-                  }}
-                >
+                <Link className="xb-icon" to={service.link}>
                   <svg
                     width="31"
                     height="31"

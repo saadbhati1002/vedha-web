@@ -24,7 +24,18 @@ const transporter = nodemailer.createTransport({
 // Email endpoint
 app.post('/api/send-email', async (req, res) => {
   try {
-    const { service, problem, email, phone, countryCode, meetingType, date, time } = req.body;
+    const {
+      service,
+      problem,
+      email,
+      phone,
+      countryCode,
+      meetingType,
+      date,
+      time,
+      toAddress,
+      subject,
+    } = req.body;
 
     // Email content for info@vedha.ae
     const emailBody = `
@@ -44,10 +55,11 @@ Time: ${time}
     `.trim();
 
     // Send email to info@vedha.ae
+    const primaryRecipient = toAddress || 'info@vedha.ae';
     const infoEmail = {
       from: process.env.SMTP_USER,
-      to: 'info@vedha.ae',
-      subject: 'New Contact Form Submission',
+      to: primaryRecipient,
+      subject: subject || 'New Contact Form Submission',
       text: emailBody,
       html: `
         <h2>New Contact Form Submission</h2>

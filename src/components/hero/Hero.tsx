@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import LightPillar from "../reactbits/LightPillar";
 import vedhaLogo from "../../images/logo/vedha-icon.svg";
 
-interface HeroSectionProps {
-  onOpenForm?: () => void;
-}
-
-const HeroSection: React.FC<HeroSectionProps> = ({ onOpenForm }) => {
+const HeroSection: React.FC = () => {
   const [logoOpacity, setLogoOpacity] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Apply very light gradient background using secondary dark color (#1A1B1F)
@@ -88,7 +86,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onOpenForm }) => {
               <div className="hero-btn">
                 <button 
                   className="thm-btn agency-btn" 
-                  onClick={() => onOpenForm?.()}
+                  onClick={() => navigate("/contact")}
                   type="button"
                 >
                   <span className="text">Start Your Project</span>
