@@ -19,6 +19,7 @@ import BlogPage from "../BlogPage/BlogPage";
 import BlogDetails from "../BlogDetails/BlogDetails";
 import ContactPage from "../ContactPage/ContactPage";
 import ErrorPage from "../ErrorPage/ErrorPage";
+import OnboardingPage from "../OnboardingPage/OnboardingPage";
 
 // ✅ Router Component
 const AllRoute: React.FC = () => {
@@ -45,6 +46,7 @@ const AllRoute: React.FC = () => {
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog-details" element={<BlogDetails />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/onboarding" element={<OnboardingPage />} />
           {/* ✅ Error Page */}
           <Route path="/404" element={<ErrorPage />} />
           <Route path="*" element={<ErrorPage />} />
