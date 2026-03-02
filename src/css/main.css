@@ -6565,16 +6565,16 @@ Drop Down menu end
 }
 
 @media (max-width: 600px) {
-  .xb-service-item {
+  .xb-service-wrap .xb-service-item {
     flex: unset !important;
     width: 100% !important;
     height: auto !important;
-    min-height: 30px !important;
+    min-height: 20px !important;
     overflow: hidden !important;
-    padding: 5px 10px !important;
+    padding: 3px 8px !important;
   }
 
-  .xb-service-item.active {
+  .xb-service-wrap .xb-service-item.active {
     flex: unset !important;
     width: 100% !important;
     height: auto !important;
@@ -6582,23 +6582,63 @@ Drop Down menu end
     padding: 20px !important;
   }
 
-  /* Show titles always, hide content and images by default */
-  .xb-service-item .xb-item--head-item {
+  /* Override existing display: block rule and set flex layout */
+  .xb-service-wrap .xb-service-item .xb-item--head-item {
     opacity: 1 !important;
     visibility: visible !important;
     transform: translateY(0) !important;
     margin: 0 !important;
     padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    position: relative !important;
   }
 
-  .xb-service-item .xb-item--head-item .xb-item--title {
+  .xb-service-wrap .xb-service-item .xb-item--head-item .xb-item--title {
     margin: 0 !important;
     padding: 0 !important;
     line-height: 1.1 !important;
+    order: 1 !important;
+    width: 100% !important;
+    display: block !important;
   }
 
-  .xb-service-item .xb-item--content,
-  .xb-service-item .xb-item--img {
+  .xb-service-wrap .xb-service-item .xb-item--head-item .xb-item--icon {
+    order: 2 !important;
+    margin-top: 8px !important;
+    margin-left: 0 !important;
+    align-self: flex-start !important;
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+  }
+
+  /* When active, return to normal layout */
+  .xb-service-wrap .xb-service-item.active .xb-item--head-item {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  .xb-service-wrap .xb-service-item.active .xb-item--head-item .xb-item--title {
+    order: unset !important;
+    width: auto !important;
+  }
+
+  .xb-service-wrap .xb-service-item.active .xb-item--head-item .xb-item--icon {
+    order: unset !important;
+    margin-top: 0 !important;
+    margin-left: auto !important;
+    align-self: center !important;
+    position: absolute !important;
+    top: 15px !important;
+    right: 15px !important;
+  }
+
+  .xb-service-wrap .xb-service-item .xb-item--content,
+  .xb-service-wrap .xb-service-item .xb-item--img {
     opacity: 0;
     visibility: hidden;
     transform: translateY(30px);
@@ -6608,8 +6648,8 @@ Drop Down menu end
   }
 
   /* Show content and images only when active */
-  .xb-service-item.active .xb-item--content,
-  .xb-service-item.active .xb-item--img {
+  .xb-service-wrap .xb-service-item.active .xb-item--content,
+  .xb-service-wrap .xb-service-item.active .xb-item--img {
     opacity: 1 !important;
     visibility: visible !important;
     transform: translateY(0) !important;
