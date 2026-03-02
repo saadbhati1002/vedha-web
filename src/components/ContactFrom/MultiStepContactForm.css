@@ -1,35 +1,46 @@
-.multi-step-form-wrapper {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 40px;
-  background-color: #1a1b1f;
-  border-radius: 20px;
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
-  box-sizing: border-box;
-  position: relative;
-}
 
-.multi-step-form-wrapper * {
-  box-sizing: border-box;
-}
 
 .multi-step-form-wrapper h2 {
-  line-height: 1.15;
+  font-size: 3rem !important;
+  line-height: 1.1;
   word-break: break-word;
-  hyphens: auto;
+  font-weight: 600 !important;
 }
 
-.multi-step-form-wrapper label,
+.multi-step-form-wrapper label {
+  font-size: 16px;
+}
+
+.multi-step-form-wrapper input,
 .multi-step-form-wrapper select,
-.multi-step-form-wrapper textarea,
-.multi-step-form-wrapper button {
-  font-size: clamp(0.95rem, 2vw, 1.1rem);
+.multi-step-form-wrapper textarea {
+  box-sizing: border-box;
+  padding: 10px 16px !important; /* desktop size */
+  font-size: 16px !important;
+}
+
+.multi-step-form-wrapper input:not(.phone-input-field),
+.multi-step-form-wrapper select:not(.country-code-select),
+.multi-step-form-wrapper textarea {
+  width: 100% !important;
+}
+
+.country-code-select {
+  flex: 0 0 38% !important;
+  max-width: 38% !important;
+  min-width: 100px !important;
+  font-size: 14px !important;
+}
+
+.phone-input-field {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  font-size: 14px !important;
 }
 
 .form-error {
   color: #f2c94c;
-  font-size: 0.9rem;
+  font-size: 14px;
   margin-bottom: 16px;
   padding: 12px;
   background-color: rgba(242, 201, 76, 0.1);
@@ -38,14 +49,14 @@
 }
 
 .meeting-details-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
 }
 
 .meeting-input {
   width: 100%;
-  padding: 15px;
+  padding: 10px;
   background-color: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
@@ -88,41 +99,65 @@
 /* Mobile optimizations - Priority layout fixes */
 @media (max-width: 600px) {
   .multi-step-form-wrapper {
-    padding: 20px 16px;
+    padding: 16px 16px;
     max-width: 100%;
-    border-radius: 16px;
     margin: 0;
   }
 
   .multi-step-form-wrapper h2 {
-    font-size: clamp(1.5rem, 6vw, 2rem) !important;
-    margin-bottom: 24px !important;
-    line-height: 1.2;
+    font-size: 2.25rem !important;
+    margin-bottom: 16px !important;
+    max-width: 90%;
+    line-height: 1.1 !important;
   }
 
   .meeting-details-grid {
-    gap: 16px;
+    gap: 12px;
   }
 
   .meeting-input {
-    padding: 14px 12px;
+    padding: 8px;
     font-size: 16px; /* Prevents iOS zoom */
   }
 
   .multi-step-form-wrapper label {
-    font-size: 14px !important;
-    margin-bottom: 8px !important;
+    font-size: 13px !important;
+    margin-bottom: 4px !important;
   }
 
   .multi-step-form-wrapper select,
   .multi-step-form-wrapper textarea,
   .multi-step-form-wrapper input {
-    font-size: 16px !important; /* Prevents iOS zoom on focus */
-    padding: 14px 12px !important;
+    font-size: 14px !important;
+    padding: 8px 10px !important;
+  }
+
+  /* Right-align button when alone (step 1) to match step 2/3 position */
+  .multi-step-form-wrapper form > div:last-child {
+    justify-content: flex-end !important;
+  }
+
+  /* Keep button position consistent across steps on mobile */
+  .multi-step-form-wrapper form > div:first-child {
+    min-height: 180px !important;
+  }
+
+  .country-code-select {
+    font-size: 11px !important;
+    padding: 8px 6px !important;
+    flex: 0 0 20% !important;
+    max-width: 20% !important;
+    min-width: 60px !important;
+  }
+
+  .phone-input-field {
+    font-size: 13px !important;
+    padding: 8px 8px !important;
   }
 
   .multi-step-form-wrapper textarea {
-    min-height: 120px;
+    min-height: unset;
+    max-height: 80px;
   }
 
   .form-error {
@@ -135,35 +170,48 @@
 /* Small mobile devices */
 @media (max-width: 480px) {
   .multi-step-form-wrapper {
-    padding: 16px 12px;
-    border-radius: 12px;
+    padding: 12px 12px;
   }
 
   .multi-step-form-wrapper h2 {
-    font-size: clamp(1.4rem, 6vw, 1.8rem) !important;
-    margin-bottom: 20px !important;
+    font-size: 1.85rem !important;
+    margin-bottom: 12px !important;
+    max-width: 85%;
   }
 
   .meeting-input {
-    padding: 12px 10px;
+    padding: 6px;
   }
 
   .multi-step-form-wrapper select,
   .multi-step-form-wrapper textarea,
   .multi-step-form-wrapper input {
-    padding: 12px 10px !important;
+    font-size: 13px !important;
+    padding: 6px 8px !important;
+  }
+
+  .country-code-select {
+    font-size: 10px !important;
+    padding: 6px 4px !important;
+    flex: 0 0 20% !important;
+    max-width: 20% !important;
+    min-width: 55px !important;
+  }
+
+  .phone-input-field {
+    font-size: 12px !important;
+    padding: 6px 6px !important;
   }
 }
 
 /* Extra small devices */
 @media (max-width: 350px) {
   .multi-step-form-wrapper {
-    padding: 12px 10px;
-    border-radius: 10px;
+    padding: 10px 10px;
   }
 
   .multi-step-form-wrapper h2 {
-    font-size: 1.3rem !important;
-    margin-bottom: 16px !important;
+    font-size: 1.6rem !important;
+    margin-bottom: 10px !important;
   }
 }

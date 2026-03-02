@@ -2,9 +2,9 @@
   position: relative;
   min-height: 100vh;
   width: 100%;
-  background: #030409;
+  background: #1a1b1f;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   padding: 60px 16px 120px;
   overflow: hidden;
@@ -16,51 +16,20 @@
   z-index: 0;
   pointer-events: none;
 }
-
-.contact-page__bloom {
-  position: absolute;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  filter: blur(70px);
-  opacity: 0.45;
+.contact-form-shell {
+  outline: 2px solid rgba(255, 0, 0, 0);
 }
-
-.bloom-one {
-  top: -100px;
-  right: -60px;
-  background: rgba(229, 255, 0, 0.55);
-}
-
-.bloom-two {
-  bottom: -80px;
-  left: -40px;
-  background: rgba(0, 255, 199, 0.5);
-}
-
-.bloom-three {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0, 168, 255, 0.35);
-}
-
 .contact-content {
   position: relative;
   z-index: 1;
   width: min(1000px, 100%);
-  display: flex;
-  justify-content: center;
+  margin: 0 auto;  
 }
 
 .contact-form-shell {
   width: 100%;
-  border-radius: 28px;
-  padding: 24px;
-  background: rgba(10, 10, 18, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
   max-width: 900px;
+  margin: 0 auto;  
 }
 
 .multi-step-form-page {
@@ -68,23 +37,13 @@
 }
 
 @media (max-width: 768px) {
-    .contact-page {
-      padding: 40px 12px 80px;
-    }
-
-  .contact-form-shell {
-    padding: 16px;
-    border-radius: 20px;
+  .contact-page {
+    padding: 30px 16px 40px;
   }
 }
 
 @media (max-width: 480px) {
   .contact-page {
-    padding: 30px 10px 50px;
-  }
-
-  .contact-form-shell {
-    padding: 14px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+    padding: 20px 12px 30px;
   }
 }

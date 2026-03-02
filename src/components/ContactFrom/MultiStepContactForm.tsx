@@ -55,6 +55,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
   mode = "modal",
 }) => {
   const isModalMode = mode === "modal";
+  const totalSteps = 3; // Make this dynamic by changing this value
   const [currentStep, setCurrentStep] = useState(1);
   const [isAnimating, setIsAnimating] = useState(false);
   const [countryCode, setCountryCode] = useState("+971");
@@ -122,7 +123,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
       }
     }
 
-    if (currentStep < 3) {
+    if (currentStep < totalSteps) {
       setStepError("");
       setCurrentStep((prev) => prev + 1);
     }
@@ -215,31 +216,29 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
         transition: "opacity 0.4s ease-in-out",
         overflowY: "auto",
         overflowX: "hidden",
-        padding: "clamp(12px, 3vw, 20px)",
+        padding: "20px",
         WebkitOverflowScrolling: "touch",
       }
     : {
-        position: "relative",
         width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        padding: "clamp(20px, 5vw, 40px) clamp(12px, 3vw, 20px)",
       };
 
   const formWrapperStyle: React.CSSProperties = {
     width: "100%",
-    maxWidth: "900px",
+    maxWidth: "100%",
     boxSizing: "border-box",
-    transform: isAnimating ? "translateY(0)" : "translateY(30px)",
-    transition: "transform 0.4s ease-out",
   };
 
   const progressIndicatorStyle: React.CSSProperties = {
-    width: `${(currentStep / 3) * 100}%`,
-    height: "100%",
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: `${(currentStep / totalSteps) * 100}%`,
+    height: "6px",
     backgroundColor: "#E5FF00",
     transition: "width 0.3s ease",
     borderRadius: "4px",
+    zIndex: 9999,       // keeps it above everything
   };
 
   const modalProgressBarStyle: React.CSSProperties = {
@@ -255,9 +254,9 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
   const pageProgressBarWrapperStyle: React.CSSProperties = {
     width: "100%",
     height: "6px",
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    backgroundColor: "rgba(255, 255, 255, 0)",
     borderRadius: "4px",
-    marginBottom: "30px",
+    marginBottom: "16px",
   };
 
   const closeButtonElement = isModalMode ? (
@@ -265,20 +264,20 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
       type="button"
       style={{
         position: "fixed",
-        top: "clamp(12px, 3vw, 20px)",
-        right: "clamp(12px, 3vw, 20px)",
+        top: "20px",
+        right: "20px",
         background: "transparent",
         border: "none",
         color: "#fff",
-        fontSize: "clamp(28px, 6vw, 36px)",
+        fontSize: "32px",
         cursor: "pointer",
-        padding: "clamp(8px, 2vw, 12px)",
+        padding: "10px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         borderRadius: "50%",
-        width: "clamp(40px, 10vw, 50px)",
-        height: "clamp(40px, 10vw, 50px)",
+        width: "48px",
+        height: "48px",
         transition: "background 0.2s",
         zIndex: 10001,
         touchAction: "manipulation",
@@ -300,11 +299,11 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
   const modalSuccessContentStyle: React.CSSProperties = {
     textAlign: "center",
     maxWidth: "600px",
-    padding: "clamp(20px, 5vw, 40px)",
+    padding: "40px",
     animation: "fadeIn 0.4s ease-in-out",
   };
   const pageSuccessOuterStyle: React.CSSProperties = {
-    padding: "clamp(30px, 8vw, 60px) clamp(12px, 3vw, 20px)",
+    padding: "40px 20px",
     display: "flex",
     justifyContent: "center",
   };
@@ -312,23 +311,23 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
     width: "100%",
     maxWidth: "800px",
     backgroundColor: "#111",
-    borderRadius: "clamp(12px, 3vw, 24px)",
-    padding: "clamp(30px, 8vw, 60px)",
+    borderRadius: "20px",
+    padding: "50px",
     boxShadow: "0 25px 80px rgba(0, 0, 0, 0.4)",
     textAlign: "center",
   };
   const successButtonStyle: React.CSSProperties = {
-    padding: "clamp(12px, 3vw, 15px) clamp(24px, 8vw, 40px)",
+    padding: "14px 32px",
     backgroundColor: "#E5FF00",
     border: "none",
     borderRadius: "50px",
     color: "#000",
-    fontSize: "clamp(14px, 3.5vw, 16px)",
+    fontSize: "16px",
     fontFamily: "var(--font-body)",
     fontWeight: "600",
     cursor: "pointer",
     transition: "all 0.2s",
-    marginTop: "clamp(20px, 5vw, 30px)",
+    marginTop: "24px",
     touchAction: "manipulation",
     minHeight: "44px",
   };
@@ -338,11 +337,9 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
         @keyframes fadeIn {
           from {
             opacity: 0;
-            transform: translateY(5px);
           }
           to {
             opacity: 1;
-            transform: translateY(0);
           }
         }
         input[type="date"]::-webkit-calendar-picker-indicator,
@@ -362,10 +359,10 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
       <div style={isModalMode ? modalSuccessContentStyle : pageSuccessInnerStyle}>
         <h2
           style={{
-            fontSize: "clamp(1.5rem, 6vw, 2.6rem)",
-            fontWeight: "300",
-            color: "#fff",
-            marginBottom: "clamp(20px, 5vw, 30px)",
+            fontSize: "2rem",
+            fontWeight: "700",
+            color: "#E5FF00",
+            marginBottom: "24px",
             fontFamily: "var(--font-heading)",
             letterSpacing: "-0.02em",
             lineHeight: 1.2,
@@ -423,16 +420,13 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
           <h2
             key={currentStep}
             style={{
-              fontSize: "clamp(1.5rem, 6vw, 3.8rem)",
-              lineHeight: 1.2,
-              fontWeight: "300",
+              lineHeight: 1.1,
+              fontWeight: "600",
               color: "#fff",
-              marginBottom: "clamp(24px, 6vw, 50px)",
+              marginBottom: "24px",
               textAlign: "left",
               fontFamily: "var(--font-heading)",
               letterSpacing: "-0.02em",
-              transition: "opacity 0.3s ease-in-out, transform 0.3s ease-in-out",
-              animation: "fadeIn 0.3s ease-in-out",
               wordBreak: "break-word",
             }}
           >
@@ -448,14 +442,15 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
               <div
                 style={{
                   animation: "fadeIn 0.4s ease-in-out",
+                  minHeight: "220px",
                 }}
               >
-                <div style={{ marginBottom: "30px" }}>
+                <div style={{ marginBottom: "20px" }}>
                   <label
                     style={{
                       display: "block",
                       color: "#fff",
-                      marginBottom: "10px",
+                      marginBottom: "6px",
                       fontSize: "16px",
                       fontFamily: "var(--font-body)",
                     }}
@@ -469,7 +464,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                     required
                     style={{
                       width: "100%",
-                      padding: "clamp(12px, 3vw, 15px)",
+                      padding: "10px",
                       backgroundColor: "rgba(255, 255, 255, 0.05)",
                       border: "1px solid rgba(255, 255, 255, 0.1)",
                       borderRadius: "10px",
@@ -503,12 +498,12 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                   </select>
                 </div>
 
-                <div style={{ marginBottom: "30px" }}>
+                <div style={{ marginBottom: "20px" }}>
                   <label
                     style={{
                       display: "block",
                       color: "#fff",
-                      marginBottom: "10px",
+                      marginBottom: "6px",
                       fontSize: "16px",
                       fontFamily: "var(--font-body)",
                     }}
@@ -520,10 +515,10 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                     value={formData.problem}
                     onChange={handleInputChange}
                     required
-                    rows={6}
+                    rows={2}
                     style={{
                       width: "100%",
-                      padding: "15px",
+                      padding: "8px",
                       backgroundColor: "rgba(255, 255, 255, 0.05)",
                       border: "1px solid rgba(255, 255, 255, 0.1)",
                       borderRadius: "10px",
@@ -531,8 +526,9 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                       fontSize: "16px",
                       fontFamily: "var(--font-body)",
                       outline: "none",
-                      resize: "vertical",
+                      resize: "none",
                       transition: "all 0.2s",
+                      overflow: "auto",
                     }}
                     onFocus={(e) => {
                       e.currentTarget.style.borderColor = "#E5FF00";
@@ -552,12 +548,12 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                   animation: "fadeIn 0.4s ease-in-out",
                 }}
               >
-                <div style={{ marginBottom: "30px" }}>
+                <div style={{ marginBottom: "20px" }}>
                   <label
                     style={{
                       display: "block",
                       color: "#fff",
-                      marginBottom: "10px",
+                      marginBottom: "6px",
                       fontSize: "16px",
                       fontFamily: "var(--font-body)",
                     }}
@@ -572,7 +568,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                     required
                     style={{
                       width: "100%",
-                      padding: "15px",
+                      padding: "10px",
                       backgroundColor: "rgba(255, 255, 255, 0.05)",
                       border: "1px solid rgba(255, 255, 255, 0.1)",
                       borderRadius: "10px",
@@ -591,12 +587,12 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                   />
                 </div>
 
-                <div style={{ marginBottom: "30px" }}>
+                <div style={{ marginBottom: "20px" }}>
                   <label
                     style={{
                       display: "block",
                       color: "#fff",
-                      marginBottom: "10px",
+                      marginBottom: "6px",
                       fontSize: "16px",
                       fontFamily: "var(--font-body)",
                     }}
@@ -606,24 +602,26 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                   <div
                     style={{
                       display: "flex",
-                      gap: "10px",
+                      gap: "15px",
+                      width: "100%",
                     }}
                   >
                     <select
                       value={countryCode}
                       onChange={(e) => setCountryCode(e.target.value)}
+                      className="country-code-select"
                       style={{
-                        padding: "15px 12px",
+                        padding: "10px 8px",
                         backgroundColor: "rgba(255, 255, 255, 0.05)",
                         border: "1px solid rgba(255, 255, 255, 0.1)",
                         borderRadius: "10px",
                         color: "#fff",
-                        fontSize: "16px",
+                        fontSize: "14px",
                         fontFamily: "var(--font-body)",
                         outline: "none",
                         transition: "all 0.2s",
                         cursor: "pointer",
-                        width: "auto",
+                        boxSizing: "border-box",
                       }}
                       onFocus={(e) => {
                         e.currentTarget.style.borderColor = "#E5FF00";
@@ -649,17 +647,18 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                       onChange={handleInputChange}
                       required
                       placeholder="Phone number"
+                      className="phone-input-field"
                       style={{
-                        flex: 1,
-                        padding: "15px",
+                        padding: "10px",
                         backgroundColor: "rgba(255, 255, 255, 0.05)",
                         border: "1px solid rgba(255, 255, 255, 0.1)",
                         borderRadius: "10px",
                         color: "#fff",
-                        fontSize: "16px",
+                        fontSize: "10px",
                         fontFamily: "var(--font-body)",
                         outline: "none",
                         transition: "all 0.2s",
+                        boxSizing: "border-box",
                       }}
                       onFocus={(e) => {
                         e.currentTarget.style.borderColor = "#E5FF00";
@@ -680,12 +679,12 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                   animation: "fadeIn 0.4s ease-in-out",
                 }}
               >
-                <div style={{ marginBottom: "30px" }}>
+                <div style={{ marginBottom: "16px" }}>
                   <label
                     style={{
                       display: "block",
                       color: "#fff",
-                      marginBottom: "10px",
+                      marginBottom: "6px",
                       fontSize: "16px",
                       fontFamily: "var(--font-body)",
                     }}
@@ -695,14 +694,14 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                   <div
                     style={{
                       display: "flex",
-                      gap: "20px",
-                      marginBottom: "20px",
+                      gap: "12px",
+                      marginBottom: "12px",
                     }}
                   >
                     <label
                       style={{
                         flex: 1,
-                        padding: "15px",
+                        padding: "10px",
                         backgroundColor:
                           formData.meetingType === "virtual"
                             ? "rgba(229, 255, 0, 0.1)"
@@ -732,7 +731,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                     <label
                       style={{
                         flex: 1,
-                        padding: "15px",
+                        padding: "10px",
                         backgroundColor:
                           formData.meetingType === "physical"
                             ? "rgba(229, 255, 0, 0.1)"
@@ -762,13 +761,13 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                   </div>
                 </div>
 
-                <div className="meeting-details-grid" style={{ marginBottom: "30px" }}>
+                <div className="meeting-details-grid" style={{ marginBottom: "20px" }}>
                   <div>
                     <label
                       style={{
                         display: "block",
                         color: "#fff",
-                        marginBottom: "10px",
+                        marginBottom: "6px",
                         fontSize: "16px",
                         fontFamily: "var(--font-body)",
                       }}
@@ -790,7 +789,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                       style={{
                         display: "block",
                         color: "#fff",
-                        marginBottom: "10px",
+                        marginBottom: "6px",
                         fontSize: "16px",
                         fontFamily: "var(--font-body)",
                       }}
@@ -815,8 +814,8 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                marginTop: "clamp(24px, 6vw, 40px)",
-                gap: "clamp(12px, 3vw, 20px)",
+                marginTop: "20px",
+                gap: "12px",
                 flexWrap: "wrap",
               }}
             >
@@ -825,12 +824,12 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                   type="button"
                   onClick={handleBack}
                   style={{
-                    padding: "clamp(12px, 3vw, 15px) clamp(20px, 6vw, 40px)",
+                    padding: "12px 28px",
                     backgroundColor: "transparent",
                     border: "2px solid rgba(255, 255, 255, 0.2)",
                     borderRadius: "50px",
                     color: "#fff",
-                    fontSize: "clamp(14px, 3.5vw, 16px)",
+                    fontSize: "16px",
                     fontFamily: "var(--font-body)",
                     fontWeight: "600",
                     cursor: "pointer",
@@ -852,19 +851,19 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                 </button>
               )}
 
-              <div style={{ marginLeft: "auto" }}>
-                {currentStep < 3 ? (
+              <div style={{ marginLeft: currentStep > 1 ? "auto" : undefined }}>
+                {currentStep < totalSteps ? (
                   <button
                     type="button"
                     onClick={handleNext}
                     disabled={!isStepValid()}
                     style={{
-                      padding: "clamp(12px, 3vw, 15px) clamp(20px, 6vw, 40px)",
+                      padding: "12px 28px",
                       backgroundColor: isStepValid() ? "#E5FF00" : "rgba(229, 255, 0, 0.3)",
                       border: "none",
                       borderRadius: "50px",
                       color: isStepValid() ? "#000" : "rgba(0, 0, 0, 0.5)",
-                      fontSize: "clamp(14px, 3.5vw, 16px)",
+                      fontSize: "16px",
                       fontFamily: "var(--font-body)",
                       fontWeight: "600",
                       cursor: isStepValid() ? "pointer" : "not-allowed",
@@ -891,12 +890,12 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                     type="submit"
                     disabled={!isStepValid()}
                     style={{
-                      padding: "clamp(12px, 3vw, 15px) clamp(20px, 6vw, 40px)",
+                      padding: "12px 28px",
                       backgroundColor: isStepValid() ? "#E5FF00" : "rgba(229, 255, 0, 0.3)",
                       border: "none",
                       borderRadius: "50px",
                       color: isStepValid() ? "#000" : "rgba(0, 0, 0, 0.5)",
-                      fontSize: "clamp(14px, 3.5vw, 16px)",
+                      fontSize: "16px",
                       fontFamily: "var(--font-body)",
                       fontWeight: "600",
                       cursor: isStepValid() ? "pointer" : "not-allowed",
