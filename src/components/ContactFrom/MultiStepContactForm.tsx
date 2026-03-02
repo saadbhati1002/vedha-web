@@ -105,10 +105,6 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail);
   };
 
-  const isGmailAddress = (email: string) => {
-    return email.trim().toLowerCase().endsWith("@gmail.com");
-  };
-
   const isValidPhone = (value: string) => {
     const cleaned = value.replace(/\D/g, "");
     return cleaned.length === 10;
@@ -116,8 +112,8 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
 
   const handleNext = () => {
     if (currentStep === 2) {
-      if (!isValidEmail(formData.email) || !isGmailAddress(formData.email)) {
-        setStepError("Please enter a valid Gmail address.");
+      if (!isValidEmail(formData.email)) {
+        setStepError("Please enter a valid email address.");
         return;
       }
       if (!isValidPhone(formData.phone)) {
