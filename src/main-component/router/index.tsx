@@ -18,6 +18,7 @@ import ScrollToTop from "./ScrollToTop";
 import BlogPage from "../BlogPage/BlogPage";
 import BlogDetails from "../BlogDetails/BlogDetails";
 import ContactPage from "../ContactPage/ContactPage";
+import ContactUsPage from "../ContactPage/ContactUsPage";
 import ErrorPage from "../ErrorPage/ErrorPage";
 
 // ✅ Router Component
@@ -45,6 +46,7 @@ const AllRoute: React.FC = () => {
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog-details" element={<BlogDetails />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/contact-us" element={<ContactUsPage />} />
           {/* ✅ Error Page */}
           <Route path="/404" element={<ErrorPage />} />
           <Route path="*" element={<ErrorPage />} />

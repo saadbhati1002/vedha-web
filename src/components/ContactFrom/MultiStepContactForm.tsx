@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { FiX } from "react-icons/fi";
 
 interface MultiStepContactFormProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
   preselectedService?: string;
+  isStandalone?: boolean;
 }
 
 const services = [
@@ -32,6 +33,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
   isOpen,
   onClose,
   preselectedService,
+  isStandalone = false,
 }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -102,7 +104,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       // Send email via API
       const response = await fetch('http://localhost:3001/api/send-email', {
@@ -149,7 +151,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
     }
   };
 
-  if (!isOpen) return null;
+  if (!isOpen && !isStandalone) return null;
 
   // Show success message
   if (isSubmitted) {
@@ -157,18 +159,18 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
       <div
         className="multi-step-form-overlay"
         style={{
-          position: "fixed",
+          position: isStandalone ? "relative" : "fixed",
           top: 0,
           left: 0,
           width: "100%",
-          height: "100%",
+          height: isStandalone ? "auto" : "100%",
           backgroundColor: "#1A1B1F",
           zIndex: 9999,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          opacity: isAnimating ? 1 : 0,
-          transition: "opacity 0.4s ease-in-out",
+          opacity: 1,
+          padding: isStandalone ? "60px 20px" : "0",
         }}
       >
         <div
@@ -191,30 +193,32 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
           >
             Thanks! We have received your problem... will see you soon with a solution.
           </h2>
-          <button
-            onClick={onClose}
-            style={{
-              padding: "15px 40px",
-              backgroundColor: "#E5FF00",
-              border: "none",
-              borderRadius: "50px",
-              color: "#000",
-              fontSize: "16px",
-              fontFamily: "var(--font-body)",
-              fontWeight: "600",
-              cursor: "pointer",
-              transition: "all 0.2s",
-              marginTop: "30px",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "scale(1.05)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "scale(1)";
-            }}
-          >
-            Close
-          </button>
+          {!isStandalone && (
+            <button
+              onClick={onClose}
+              style={{
+                padding: "15px 40px",
+                backgroundColor: "#E5FF00",
+                border: "none",
+                borderRadius: "50px",
+                color: "#000",
+                fontSize: "16px",
+                fontFamily: "var(--font-body)",
+                fontWeight: "600",
+                cursor: "pointer",
+                transition: "all 0.2s",
+                marginTop: "30px",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.05)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1)";
+              }}
+            >
+              Close
+            </button>
+          )}
         </div>
       </div>
     );
@@ -222,8 +226,15 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
 
   return (
     <div
-      className="multi-step-form-overlay"
-      style={{
+      className={isStandalone ? "multi-step-form-container" : "multi-step-form-overlay"}
+      style={isStandalone ? {
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "20px",
+        backgroundColor: "#1A1B1F",
+      } : {
         position: "fixed",
         top: 0,
         left: 0,
@@ -262,37 +273,39 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
         />
       </div>
 
-      {/* Close Button - Top Right */}
-      <button
-        onClick={onClose}
-        style={{
-          position: "fixed",
-          top: "20px",
-          right: "20px",
-          background: "transparent",
-          border: "none",
-          color: "#fff",
-          fontSize: "36px",
-          cursor: "pointer",
-          padding: "12px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: "50%",
-          width: "50px",
-          height: "50px",
-          transition: "background 0.2s",
-          zIndex: 10001,
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.background = "rgba(229, 255, 0, 0.1)";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.background = "transparent";
-        }}
-      >
-        <FiX />
-      </button>
+      {/* Close Button - Top Right - Hidden in Standalone */}
+      {!isStandalone && (
+        <button
+          onClick={onClose}
+          style={{
+            position: "fixed",
+            top: "20px",
+            right: "20px",
+            background: "transparent",
+            border: "none",
+            color: "#fff",
+            fontSize: "36px",
+            cursor: "pointer",
+            padding: "12px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: "50%",
+            width: "50px",
+            height: "50px",
+            transition: "background 0.2s",
+            zIndex: 10001,
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "rgba(229, 255, 0, 0.1)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "transparent";
+          }}
+        >
+          <FiX />
+        </button>
+      )}
 
       <div
         style={{
@@ -300,22 +313,18 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
           maxWidth: "800px",
           backgroundColor: "#1A1B1F",
           borderRadius: "20px",
-          padding: "40px",
-          margin: "auto",
+          padding: isStandalone ? "0" : "40px",
+          margin: isStandalone ? "0" : "auto",
           position: "relative",
-          transform: isAnimating ? "translateY(0)" : "translateY(30px)",
+          transform: (isAnimating || isStandalone) ? "translateY(0)" : "translateY(30px)",
           transition: "transform 0.4s ease-out",
         }}
       >
         {/* Title - Dynamic based on step */}
         <h2
           key={currentStep}
+          className="multi-step-title"
           style={{
-            fontSize: "72px",
-            fontWeight: "300",
-            color: "#fff",
-            marginBottom: "60px",
-            textAlign: "left",
             fontFamily: "var(--font-heading)",
             letterSpacing: "-0.02em",
             transition: "opacity 0.3s ease-in-out, transform 0.3s ease-in-out",
@@ -354,13 +363,6 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                   onChange={handleInputChange}
                   required
                   style={{
-                    width: "100%",
-                    padding: "15px",
-                    backgroundColor: "rgba(255, 255, 255, 0.05)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    borderRadius: "10px",
-                    color: "#fff",
-                    fontSize: "16px",
                     fontFamily: "var(--font-body)",
                     outline: "none",
                     transition: "all 0.2s",
@@ -407,13 +409,6 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                   required
                   rows={6}
                   style={{
-                    width: "100%",
-                    padding: "15px",
-                    backgroundColor: "rgba(255, 255, 255, 0.05)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    borderRadius: "10px",
-                    color: "#fff",
-                    fontSize: "16px",
                     fontFamily: "var(--font-body)",
                     outline: "none",
                     resize: "vertical",
@@ -456,13 +451,6 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                   onChange={handleInputChange}
                   required
                   style={{
-                    width: "100%",
-                    padding: "15px",
-                    backgroundColor: "rgba(255, 255, 255, 0.05)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    borderRadius: "10px",
-                    color: "#fff",
-                    fontSize: "16px",
                     fontFamily: "var(--font-body)",
                     outline: "none",
                     transition: "all 0.2s",
@@ -498,18 +486,12 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                     value={countryCode}
                     onChange={(e) => setCountryCode(e.target.value)}
                     style={{
-                      padding: "15px 12px",
-                      backgroundColor: "rgba(255, 255, 255, 0.05)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    borderRadius: "10px",
-                    color: "#fff",
-                    fontSize: "16px",
-                    fontFamily: "var(--font-body)",
-                    outline: "none",
-                    transition: "all 0.2s",
-                    cursor: "pointer",
-                    width: "auto",
-                  }}
+                      fontFamily: "var(--font-body)",
+                      outline: "none",
+                      transition: "all 0.2s",
+                      cursor: "pointer",
+                      width: "35%",
+                    }}
                     onFocus={(e) => {
                       e.currentTarget.style.borderColor = "#E5FF00";
                     }}
@@ -536,12 +518,6 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                     placeholder="Phone number"
                     style={{
                       flex: 1,
-                      padding: "15px",
-                      backgroundColor: "rgba(255, 255, 255, 0.05)",
-                      border: "1px solid rgba(255, 255, 255, 0.1)",
-                      borderRadius: "10px",
-                      color: "#fff",
-                      fontSize: "16px",
                       fontFamily: "var(--font-body)",
                       outline: "none",
                       transition: "all 0.2s",
@@ -585,6 +561,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                   }}
                 >
                   <label
+                    className="radio-label"
                     style={{
                       flex: 1,
                       padding: "15px",
@@ -615,6 +592,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                     Virtual Meeting
                   </label>
                   <label
+                    className="radio-label"
                     style={{
                       flex: 1,
                       padding: "15px",
@@ -667,13 +645,6 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                   required
                   min={new Date().toISOString().split("T")[0]}
                   style={{
-                    width: "100%",
-                    padding: "15px",
-                    backgroundColor: "rgba(255, 255, 255, 0.05)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    borderRadius: "10px",
-                    color: "#fff",
-                    fontSize: "16px",
                     fontFamily: "var(--font-body)",
                     outline: "none",
                     transition: "all 0.2s",
@@ -706,13 +677,6 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                   onChange={handleInputChange}
                   required
                   style={{
-                    width: "100%",
-                    padding: "15px",
-                    backgroundColor: "rgba(255, 255, 255, 0.05)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    borderRadius: "10px",
-                    color: "#fff",
-                    fontSize: "16px",
                     fontFamily: "var(--font-body)",
                     outline: "none",
                     transition: "all 0.2s",
@@ -729,105 +693,46 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
           )}
 
           {/* Navigation Buttons */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: "40px",
-              gap: "20px",
-            }}
-          >
+          <div className="button-wrapper" style={{ gap: "15px", flexWrap: "wrap", justifyContent: currentStep > 1 ? "space-between" : "flex-end" }}>
             {currentStep > 1 && (
               <button
                 type="button"
+                className="back-button"
                 onClick={handleBack}
                 style={{
-                  padding: "15px 40px",
                   backgroundColor: "transparent",
                   border: "2px solid rgba(255, 255, 255, 0.2)",
-                  borderRadius: "50px",
                   color: "#fff",
-                  fontSize: "16px",
-                  fontFamily: "var(--font-body)",
-                  fontWeight: "600",
-                  cursor: "pointer",
-                  transition: "all 0.2s",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "#E5FF00";
-                  e.currentTarget.style.color = "#E5FF00";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.2)";
-                  e.currentTarget.style.color = "#fff";
                 }}
               >
                 Back
               </button>
             )}
 
-            <div style={{ marginLeft: "auto" }}>
-              {currentStep < 3 ? (
-                <button
-                  type="button"
-                  onClick={handleNext}
-                  disabled={!isStepValid()}
-                  style={{
-                    padding: "15px 40px",
-                    backgroundColor: isStepValid() ? "#E5FF00" : "rgba(229, 255, 0, 0.3)",
-                    border: "none",
-                    borderRadius: "50px",
-                    color: isStepValid() ? "#000" : "rgba(0, 0, 0, 0.5)",
-                    fontSize: "16px",
-                    fontFamily: "var(--font-body)",
-                    fontWeight: "600",
-                    cursor: isStepValid() ? "pointer" : "not-allowed",
-                    transition: "all 0.2s",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (isStepValid()) {
-                      e.currentTarget.style.transform = "scale(1.05)";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (isStepValid()) {
-                      e.currentTarget.style.transform = "scale(1)";
-                    }
-                  }}
-                >
-                  Next
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={!isStepValid()}
-                  style={{
-                    padding: "15px 40px",
-                    backgroundColor: isStepValid() ? "#E5FF00" : "rgba(229, 255, 0, 0.3)",
-                    border: "none",
-                    borderRadius: "50px",
-                    color: isStepValid() ? "#000" : "rgba(0, 0, 0, 0.5)",
-                    fontSize: "16px",
-                    fontFamily: "var(--font-body)",
-                    fontWeight: "600",
-                    cursor: isStepValid() ? "pointer" : "not-allowed",
-                    transition: "all 0.2s",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (isStepValid()) {
-                      e.currentTarget.style.transform = "scale(1.05)";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (isStepValid()) {
-                      e.currentTarget.style.transform = "scale(1)";
-                    }
-                  }}
-                >
-                  Submit
-                </button>
-              )}
-            </div>
+            {currentStep < 3 ? (
+              <button
+                type="button"
+                onClick={handleNext}
+                disabled={!isStepValid()}
+                style={{
+                  opacity: isStepValid() ? 1 : 0.5,
+                  cursor: isStepValid() ? "pointer" : "not-allowed",
+                }}
+              >
+                Next
+              </button>
+            ) : (
+              <button
+                type="submit"
+                disabled={!isStepValid()}
+                style={{
+                  opacity: isStepValid() ? 1 : 0.5,
+                  cursor: isStepValid() ? "pointer" : "not-allowed",
+                }}
+              >
+                Submit
+              </button>
+            )}
           </div>
         </form>
       </div>

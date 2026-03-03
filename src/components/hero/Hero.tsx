@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 import LightPillar from "../reactbits/LightPillar";
+import { useNavigate } from "react-router-dom";
 import vedhaLogo from "../../images/logo/vedha-icon.svg";
 
-interface HeroSectionProps {
-  onOpenForm?: () => void;
-}
-
-const HeroSection: React.FC<HeroSectionProps> = ({ onOpenForm }) => {
+const HeroSection: React.FC = () => {
+  const navigate = useNavigate();
   const [logoOpacity, setLogoOpacity] = useState(0);
 
   useEffect(() => {
     // Apply very light gradient background using secondary dark color (#1A1B1F)
     const gradient = "linear-gradient(180deg, #1A1B1F 0%, #1C1D21 30%, #1D1E22 50%, #1C1D21 70%, #1A1B1F 100%)";
-    
+
     const sectionEl = document.querySelector<HTMLElement>(".hero");
     if (sectionEl) {
       sectionEl.style.background = gradient;
@@ -22,17 +20,17 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onOpenForm }) => {
     // Animate logo fade-in
     const fadeInDuration = 2000; // 2 seconds
     const startTime = Date.now();
-    
+
     const animate = () => {
       const elapsed = Date.now() - startTime;
       const progress = Math.min(elapsed / fadeInDuration, 1);
       setLogoOpacity(progress * 0.3); // Fade to 0.3 opacity
-      
+
       if (progress < 1) {
         requestAnimationFrame(animate);
       }
     };
-    
+
     // Start animation after a short delay
     setTimeout(() => {
       requestAnimationFrame(animate);
@@ -86,9 +84,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onOpenForm }) => {
                 From web development to cloud solutions, mobile apps to digital transformation—we deliver end-to-end tech services that drive growth and innovation.
               </p>
               <div className="hero-btn">
-                <button 
-                  className="thm-btn agency-btn" 
-                  onClick={() => onOpenForm?.()}
+                <button
+                  className="thm-btn agency-btn"
+                  onClick={() => navigate('/contact-us')}
                   type="button"
                 >
                   <span className="text">Start Your Project</span>

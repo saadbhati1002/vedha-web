@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import arrowIcon from "../../images/icon/rotate-arrow-black.svg";
 
 // Service images
@@ -63,32 +63,29 @@ const services: ServiceItem[] = [
   },
 ];
 
-interface ServiceSectionProps {
-  onServiceClick?: (serviceTitle: string) => void;
-}
-
-const ServiceSection: React.FC<ServiceSectionProps> = ({ onServiceClick }) => {
+const ServiceSection: React.FC = () => {
+  const navigate = useNavigate();
   const [activeId, setActiveId] = useState<number>(1);
 
   useEffect(() => {
     // Apply very light gradient background using secondary dark color (#1A1B1F)
     // Very subtle gradient from dark to slightly lighter and back
     const gradient = "linear-gradient(180deg, #1A1B1F 0%, #1C1D21 30%, #1D1E22 50%, #1C1D21 70%, #1A1B1F 100%)";
-    
+
     // Top section (header area)
     const sectionEl = document.querySelector<HTMLElement>(".service");
     if (sectionEl) {
       sectionEl.style.background = gradient;
       sectionEl.style.backgroundImage = "none";
     }
-    
+
     // Middle section (service wrap container)
     const bgEl = document.querySelector<HTMLElement>(".xb-service-wrap");
     if (bgEl) {
       bgEl.style.background = gradient;
       bgEl.style.backgroundImage = "none";
     }
-    
+
     // Bottom section (service items) - update to match gradient theme
     const serviceItems = document.querySelectorAll<HTMLElement>(".xb-service-item");
     serviceItems.forEach((item) => {
@@ -265,18 +262,18 @@ const ServiceSection: React.FC<ServiceSectionProps> = ({ onServiceClick }) => {
               <div className="xb-item--item">
                 <div className="xb-item--head-item">
                   <h3 className="xb-item--title border-effect">
-                    <Link 
+                    <Link
                       to={service.link}
                       onClick={(e) => {
                         e.preventDefault();
-                        onServiceClick?.(service.title);
+                        navigate('/contact-us');
                       }}
                     >
                       {service.title}
                     </Link>
                   </h3>
-                  <Link 
-                    className="xb-item--icon" 
+                  <Link
+                    className="xb-item--icon"
                     to={service.link}
                     onClick={(e) => {
                       e.preventDefault();
@@ -290,12 +287,12 @@ const ServiceSection: React.FC<ServiceSectionProps> = ({ onServiceClick }) => {
                 <div className="img-hove-effect">
                   <div className="xb-item--img xb-img">
                     {[...Array(4)].map((_, i) => (
-                      <Link 
-                        to={service.link} 
+                      <Link
+                        to={service.link}
                         key={i}
                         onClick={(e) => {
                           e.preventDefault();
-                          onServiceClick?.(service.title);
+                          navigate('/contact-us');
                         }}
                       >
                         <img src={service.img} alt={service.title} />
@@ -307,18 +304,18 @@ const ServiceSection: React.FC<ServiceSectionProps> = ({ onServiceClick }) => {
 
               <div className="service-vertical-text">
                 <h3 className="xb-item--title">
-                  <Link 
+                  <Link
                     to={service.link}
                     onClick={(e) => {
                       e.preventDefault();
-                      onServiceClick?.(service.title);
+                      navigate('/contact-us');
                     }}
                   >
                     {service.title}
                   </Link>
                 </h3>
-                <Link 
-                  className="xb-icon" 
+                <Link
+                  className="xb-icon"
                   to={service.link}
                   onClick={(e) => {
                     e.preventDefault();

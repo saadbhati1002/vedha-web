@@ -1,0 +1,76 @@
+.contact-page {
+    min-height: 100vh;
+    background: #0f1117;
+    padding: 60px 20px;
+    /* Add side padding */
+    box-sizing: border-box;
+}
+
+.form-wrapper {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-wrapper h1,
+.form-wrapper .multi-step-title {
+    font-weight: 300;
+    color: #e6e6e6;
+    line-height: 1.1;
+    margin-bottom: 30px;
+
+    /* Responsive font */
+    font-size: clamp(32px, 8vw, 64px);
+}
+
+.form-wrapper select,
+.form-wrapper textarea,
+.form-wrapper input {
+    width: 100%;
+    padding: 14px;
+    background: #1c1f26;
+    border: 1px solid #2a2f38;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    /* Important for mobile */
+    box-sizing: border-box;
+}
+
+.button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.button-wrapper button {
+    background: #9acd32;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #000;
+}
+
+/* On Mobile center it */
+@media (max-width: 600px) {
+    .button-wrapper {
+        justify-content: center;
+    }
+
+    .button-wrapper button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-page {
+        padding: 40px 16px;
+    }
+
+    .form-wrapper h1,
+    .form-wrapper .multi-step-title {
+        margin-bottom: 20px;
+    }
+}

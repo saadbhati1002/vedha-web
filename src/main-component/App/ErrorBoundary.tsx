@@ -1,5 +1,4 @@
 import React, { Component, ReactNode } from "react";
-import { Link } from "react-router-dom";
 
 interface ErrorBoundaryProps {
     children: ReactNode;
@@ -7,6 +6,7 @@ interface ErrorBoundaryProps {
 
 interface ErrorBoundaryState {
     hasError: boolean;
+    errorMsg?: string;
 }
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
@@ -15,8 +15,8 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
         this.state = { hasError: false };
     }
 
-    static getDerivedStateFromError(): ErrorBoundaryState {
-        return { hasError: true };
+    static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+        return { hasError: true, errorMsg: error.message };
     }
 
     componentDidCatch(error: Error, info: React.ErrorInfo) {
@@ -29,7 +29,10 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
                 <div className="error-boundary text-center p-5">
                     <h2>Something went wrong 😢</h2>
                     <p>Try refreshing the page or go back to home.</p>
-                    <Link className="thm-btn agency-btn" to="/">
+                    <pre style={{ maxWidth: '800px', margin: '20px auto', textAlign: 'left', background: '#333', padding: '15px', borderRadius: '8px' }}>
+                        {this.state.errorMsg}
+                    </pre>
+                    <a className="thm-btn agency-btn" href="/">
                         <span className="text">Back to Home</span>
                         <span className="arrow">
                             <span className="arrow-icon">
@@ -163,7 +166,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
                                 </svg>
                             </span>
                         </span>
-                    </Link>
+                    </a>
                 </div>
             );
         }

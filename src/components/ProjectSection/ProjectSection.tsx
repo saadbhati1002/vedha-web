@@ -7,13 +7,10 @@ import projectImg03 from "../../images/project/prove.jpg";
 import projectImg04 from "../../images/project/engineer.jpg";
 import projectImg05 from "../../images/project/scale.jpg";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-interface ProjectSectionProps {
-  onOpenForm?: () => void;
-}
-
-const ProjectSection: React.FC<ProjectSectionProps> = ({ onOpenForm }) => {
+const ProjectSection: React.FC = () => {
+  const navigate = useNavigate();
   useEffect(() => {
     // ✅ Scroll activation logic
     const items = document.querySelectorAll<HTMLElement>(".xb-project-item");
@@ -73,11 +70,11 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ onOpenForm }) => {
             We guide your journey from start to scale with strategy, tech, and a touch of clever.
           </h2>
           <div className="xb-heading-btn d-inline">
-            <button 
-              className="thm-btn agency-btn" 
+            <button
+              className="thm-btn agency-btn"
               onClick={(e) => {
                 e.preventDefault();
-                onOpenForm?.();
+                navigate('/contact-us');
               }}
               type="button"
             >
