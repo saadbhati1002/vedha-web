@@ -232,8 +232,8 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "20px",
-        backgroundColor: "#1A1B1F",
+        padding: "0",
+        backgroundColor: "transparent",
       } : {
         position: "fixed",
         top: 0,
@@ -311,8 +311,8 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
         style={{
           width: "100%",
           maxWidth: "800px",
-          backgroundColor: "#1A1B1F",
-          borderRadius: "20px",
+          backgroundColor: isStandalone ? "transparent" : "#1A1B1F",
+          borderRadius: isStandalone ? "0" : "20px",
           padding: isStandalone ? "0" : "40px",
           margin: isStandalone ? "0" : "auto",
           position: "relative",
@@ -321,10 +321,11 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
         }}
       >
         {/* Title - Dynamic based on step */}
-        <h2
+        <h1
           key={currentStep}
-          className="multi-step-title"
+          className={isStandalone ? "main-heading" : "multi-step-title"}
           style={{
+            textAlign: isStandalone ? "center" : "left",
             fontFamily: "var(--font-heading)",
             letterSpacing: "-0.02em",
             transition: "opacity 0.3s ease-in-out, transform 0.3s ease-in-out",
@@ -334,10 +335,10 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
           {currentStep === 1 && "Let's understand the problem!"}
           {currentStep === 2 && "Let's setup communication"}
           {currentStep === 3 && "Let us know your availability"}
-        </h2>
+        </h1>
 
         {/* Form */}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={isStandalone ? "form-area" : ""}>
           {/* Step 1: Service and Problem */}
           {currentStep === 1 && (
             <div
@@ -693,17 +694,12 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
           )}
 
           {/* Navigation Buttons */}
-          <div className="button-wrapper" style={{ gap: "15px", flexWrap: "wrap", justifyContent: currentStep > 1 ? "space-between" : "flex-end" }}>
+          <div className="button-wrapper">
             {currentStep > 1 && (
               <button
                 type="button"
-                className="back-button"
+                className="back-btn"
                 onClick={handleBack}
-                style={{
-                  backgroundColor: "transparent",
-                  border: "2px solid rgba(255, 255, 255, 0.2)",
-                  color: "#fff",
-                }}
               >
                 Back
               </button>
@@ -712,6 +708,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
             {currentStep < 3 ? (
               <button
                 type="button"
+                className="next-btn"
                 onClick={handleNext}
                 disabled={!isStepValid()}
                 style={{
@@ -724,6 +721,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
             ) : (
               <button
                 type="submit"
+                className="next-btn"
                 disabled={!isStepValid()}
                 style={{
                   opacity: isStepValid() ? 1 : 0.5,

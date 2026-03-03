@@ -1,76 +1,122 @@
 .contact-page {
     min-height: 100vh;
-    background: #0f1117;
+    background: #0b0f19;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 60px 20px;
-    /* Add side padding */
     box-sizing: border-box;
 }
 
-.form-wrapper {
+.contact-content {
     width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
+    max-width: 650px;
 }
 
-.form-wrapper h1,
-.form-wrapper .multi-step-title {
+/* Heading */
+.main-heading {
     font-weight: 300;
-    color: #e6e6e6;
     line-height: 1.1;
-    margin-bottom: 30px;
-
-    /* Responsive font */
-    font-size: clamp(32px, 8vw, 64px);
+    margin-bottom: 40px;
+    font-size: clamp(30px, 6vw, 60px);
+    color: #fff;
 }
 
-.form-wrapper select,
-.form-wrapper textarea,
-.form-wrapper input {
+/* Form Layout */
+.form-area {
+    text-align: left;
+}
+
+.form-area label {
+    display: block;
+    margin-bottom: 8px;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #fff;
+}
+
+/* Inputs */
+.form-area select,
+.form-area textarea,
+.form-area input,
+select,
+textarea,
+input {
     width: 100%;
     padding: 14px;
-    background: #1c1f26;
-    border: 1px solid #2a2f38;
     border-radius: 8px;
-    color: #fff;
+    border: 1px solid #2a2f38;
+    background: transparent !important;
+    /* No white background */
+    color: #ffffff;
+    /* White text */
     font-size: 16px;
-    /* Important for mobile */
     box-sizing: border-box;
 }
 
+/* Placeholder color */
+.form-area select::placeholder,
+.form-area textarea::placeholder,
+.form-area input::placeholder,
+select::placeholder,
+textarea::placeholder,
+input::placeholder {
+    color: #8a8f98;
+}
+
+/* Focus effect */
+.form-area select:focus,
+.form-area textarea:focus,
+.form-area input:focus,
+select:focus,
+textarea:focus,
+input:focus {
+    outline: none;
+    border-color: #6b7f1a;
+    box-shadow: 0 0 0 1px #6b7f1a;
+}
+
+.form-area select option,
+select option {
+    background: #0b0f19;
+    color: #fff;
+}
+
+/* Old Style Button (Right Side) */
+.next-btn {
+    margin-top: 25px;
+    padding: 10px 30px;
+    border-radius: 25px;
+    background: #6b7f1a;
+    /* Old olive look */
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    color: #fff;
+}
+
+/* Button wrapper aligned right */
 .button-wrapper {
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px;
+    gap: 15px;
 }
 
-.button-wrapper button {
-    background: #9acd32;
-    border: none;
-    padding: 12px 28px;
-    border-radius: 30px;
-    font-weight: 600;
+/* Back Button */
+.back-btn {
+    margin-top: 25px;
+    padding: 10px 30px;
+    border-radius: 25px;
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    font-weight: 500;
     cursor: pointer;
-    color: #000;
 }
 
-/* On Mobile center it */
-@media (max-width: 600px) {
-    .button-wrapper {
-        justify-content: center;
-    }
-
-    .button-wrapper button {
-        width: 100%;
-    }
-}
-
+/* Mobile Fix */
 @media (max-width: 768px) {
     .contact-page {
         padding: 40px 16px;
-    }
-
-    .form-wrapper h1,
-    .form-wrapper .multi-step-title {
-        margin-bottom: 20px;
     }
 }

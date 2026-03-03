@@ -10,31 +10,7 @@ const ContactUsPage: React.FC = () => {
 
     return (
         <div className="contact-page">
-            {/* Yellow Progress Bar Section */}
-            <div className="contact-header form-wrapper" style={{ textAlign: "center", marginBottom: "40px" }}>
-                <h1>Contact Us</h1>
-                <div
-                    className="progress-wrapper"
-                    style={{
-                        width: "100%",
-                        height: "4px",
-                        backgroundColor: "#2a2a2a",
-                        borderRadius: "5px",
-                        overflow: "hidden"
-                    }}
-                >
-                    <div
-                        className="progress-bar"
-                        style={{
-                            width: "100%",
-                            height: "100%",
-                            backgroundColor: "#E5FF00"
-                        }}
-                    />
-                </div>
-            </div>
-
-            <div className="form-wrapper">
+            <div className="contact-content">
                 <MultiStepContactForm isStandalone={true} />
             </div>
         </div>
