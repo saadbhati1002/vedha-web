@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { FiX } from "react-icons/fi";
+import { FiX, FiCalendar, FiClock } from "react-icons/fi";
+import { parsePhoneNumber } from "libphonenumber-js";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "./DatePickerDark.css";
 
 interface MultiStepContactFormProps {
   isOpen?: boolean;
@@ -39,6 +43,8 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
   const [isAnimating, setIsAnimating] = useState(false);
   const [countryCode, setCountryCode] = useState("+971");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedTime, setSelectedTime] = useState<Date | null>(null);
   const [formData, setFormData] = useState({
     email: "",
     phone: "",
@@ -48,6 +54,8 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
     date: "",
     time: "",
   });
+  const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
 
   const countryCodes = [
     { code: "+971", country: "UAE" },
@@ -90,7 +98,40 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const validateEmail = (email: string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const validatePhone = (phone: string, country: string) => {
+    try {
+      const phoneNumber = parsePhoneNumber(country + phone);
+      return phoneNumber ? phoneNumber.isValid() : false;
+    } catch (error) {
+      return false;
+    }
+  };
+
   const handleNext = () => {
+    if (currentStep === 2) {
+      let isValid = true;
+      if (!validateEmail(formData.email)) {
+        setEmailError("Please enter a valid email address.");
+        isValid = false;
+      } else {
+        setEmailError("");
+      }
+
+      if (!validatePhone(formData.phone, countryCode)) {
+        setPhoneError("Please enter a valid phone number.");
+        isValid = false;
+      } else {
+        setPhoneError("");
+      }
+
+      if (!isValid) return;
+    }
+
     if (currentStep < 3) {
       setCurrentStep((prev) => prev + 1);
     }
@@ -119,8 +160,8 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
           phone: formData.phone,
           countryCode: countryCode,
           meetingType: formData.meetingType,
-          date: formData.date,
-          time: formData.time,
+          date: selectedDate ? selectedDate.toLocaleDateString() : "",
+          time: selectedTime ? selectedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "",
         }),
       });
 
@@ -145,7 +186,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
       case 2:
         return formData.email && formData.phone;
       case 3:
-        return formData.date && formData.time;
+        return selectedDate && selectedTime;
       default:
         return false;
     }
@@ -325,7 +366,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
           key={currentStep}
           className={isStandalone ? "main-heading" : "multi-step-title"}
           style={{
-            textAlign: isStandalone ? "center" : "left",
+            textAlign: "left",
             fontFamily: "var(--font-heading)",
             letterSpacing: "-0.02em",
             transition: "opacity 0.3s ease-in-out, transform 0.3s ease-in-out",
@@ -360,6 +401,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                 </label>
                 <select
                   name="service"
+                  className="form-input form-select"
                   value={formData.service}
                   onChange={handleInputChange}
                   required
@@ -368,12 +410,6 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                     outline: "none",
                     transition: "all 0.2s",
                     cursor: "pointer",
-                  }}
-                  onFocus={(e) => {
-                    e.currentTarget.style.borderColor = "#E5FF00";
-                  }}
-                  onBlur={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
                   }}
                 >
                   <option value="" style={{ backgroundColor: "#1A1B1F", color: "#fff" }}>
@@ -405,21 +441,16 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                 </label>
                 <textarea
                   name="problem"
+                  className="form-input"
                   value={formData.problem}
                   onChange={handleInputChange}
                   required
-                  rows={6}
+                  rows={4}
                   style={{
                     fontFamily: "var(--font-body)",
                     outline: "none",
                     resize: "vertical",
                     transition: "all 0.2s",
-                  }}
-                  onFocus={(e) => {
-                    e.currentTarget.style.borderColor = "#E5FF00";
-                  }}
-                  onBlur={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
                   }}
                 />
               </div>
@@ -448,6 +479,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                 <input
                   type="email"
                   name="email"
+                  className="form-input"
                   value={formData.email}
                   onChange={handleInputChange}
                   required
@@ -455,14 +487,17 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                     fontFamily: "var(--font-body)",
                     outline: "none",
                     transition: "all 0.2s",
-                  }}
-                  onFocus={(e) => {
-                    e.currentTarget.style.borderColor = "#E5FF00";
-                  }}
-                  onBlur={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
+                    border: emailError ? "1px solid #ff4d4d" : "1px solid #2a2f38",
+                    borderRadius: "8px",
+                    padding: "14px",
+                    width: "100%",
+                    background: "transparent",
+                    color: "#fff",
+                    fontSize: "16px",
+                    boxSizing: "border-box",
                   }}
                 />
+                {emailError && <span style={{ color: "#ff4d4d", fontSize: "14px", marginTop: "10px", display: "block" }}>{emailError}</span>}
               </div>
 
               <div style={{ marginBottom: "30px" }}>
@@ -485,6 +520,7 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                 >
                   <select
                     value={countryCode}
+                    className="form-input form-select"
                     onChange={(e) => setCountryCode(e.target.value)}
                     style={{
                       fontFamily: "var(--font-body)",
@@ -492,12 +528,6 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                       transition: "all 0.2s",
                       cursor: "pointer",
                       width: "35%",
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = "#E5FF00";
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
                     }}
                   >
                     {countryCodes.map((country) => (
@@ -513,8 +543,13 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                   <input
                     type="tel"
                     name="phone"
+                    className="form-input"
                     value={formData.phone}
-                    onChange={handleInputChange}
+                    onChange={(e) => {
+                      // Only allow numbers and basic characters
+                      const val = e.target.value.replace(/[^\d\s-]/g, '');
+                      setFormData((prev) => ({ ...prev, phone: val }));
+                    }}
                     required
                     placeholder="Phone number"
                     style={{
@@ -522,15 +557,17 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                       fontFamily: "var(--font-body)",
                       outline: "none",
                       transition: "all 0.2s",
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = "#E5FF00";
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
+                      border: phoneError ? "1px solid #ff4d4d" : "1px solid #2a2f38",
+                      borderRadius: "8px",
+                      padding: "14px",
+                      background: "transparent",
+                      color: "#fff",
+                      fontSize: "16px",
+                      boxSizing: "border-box",
                     }}
                   />
                 </div>
+                {phoneError && <span style={{ color: "#ff4d4d", fontSize: "14px", marginTop: "10px", display: "block" }}>{phoneError}</span>}
               </div>
             </div>
           )}
@@ -626,69 +663,61 @@ const MultiStepContactForm: React.FC<MultiStepContactFormProps> = ({
                 </div>
               </div>
 
-              <div style={{ marginBottom: "30px" }}>
-                <label
-                  style={{
-                    display: "block",
-                    color: "#fff",
-                    marginBottom: "10px",
-                    fontSize: "16px",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
-                  Preferred Date
-                </label>
-                <input
-                  type="date"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleInputChange}
-                  required
-                  min={new Date().toISOString().split("T")[0]}
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    outline: "none",
-                    transition: "all 0.2s",
-                  }}
-                  onFocus={(e) => {
-                    e.currentTarget.style.borderColor = "#E5FF00";
-                  }}
-                  onBlur={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
-                  }}
-                />
-              </div>
+              <div style={{ display: "flex", gap: "16px", marginBottom: "30px" }}>
+                {/* Preferred Date */}
+                <div style={{ flex: 1 }}>
+                  <label
+                    style={{
+                      display: "block",
+                      color: "#fff",
+                      marginBottom: "10px",
+                      fontSize: "16px",
+                      fontFamily: "var(--font-body)",
+                    }}
+                  >
+                    Preferred Date
+                  </label>
+                  <div className="date-picker-wrapper">
+                    <DatePicker
+                      selected={selectedDate}
+                      onChange={(date: Date | null) => setSelectedDate(date)}
+                      minDate={new Date()}
+                      placeholderText="Select a date"
+                      dateFormat="MMM d, yyyy"
+                      popperPlacement="bottom-start"
+                    />
+                    <span className="picker-icon"><FiCalendar /></span>
+                  </div>
+                </div>
 
-              <div style={{ marginBottom: "30px" }}>
-                <label
-                  style={{
-                    display: "block",
-                    color: "#fff",
-                    marginBottom: "10px",
-                    fontSize: "16px",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
-                  Preferred Time
-                </label>
-                <input
-                  type="time"
-                  name="time"
-                  value={formData.time}
-                  onChange={handleInputChange}
-                  required
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    outline: "none",
-                    transition: "all 0.2s",
-                  }}
-                  onFocus={(e) => {
-                    e.currentTarget.style.borderColor = "#E5FF00";
-                  }}
-                  onBlur={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
-                  }}
-                />
+                {/* Preferred Time */}
+                <div style={{ flex: 1 }}>
+                  <label
+                    style={{
+                      display: "block",
+                      color: "#fff",
+                      marginBottom: "10px",
+                      fontSize: "16px",
+                      fontFamily: "var(--font-body)",
+                    }}
+                  >
+                    Preferred Time
+                  </label>
+                  <div className="time-picker-wrapper">
+                    <DatePicker
+                      selected={selectedTime}
+                      onChange={(time: Date | null) => setSelectedTime(time)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={30}
+                      timeCaption="Pick Time"
+                      dateFormat="h:mm aa"
+                      placeholderText="Select a time"
+                      popperPlacement="bottom-start"
+                    />
+                    <span className="picker-icon"><FiClock /></span>
+                  </div>
+                </div>
               </div>
             </div>
           )}
