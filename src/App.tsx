@@ -1,72 +1,26 @@
-import { useState, useEffect, useRef } from 'react';
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Lenis from 'lenis';
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import LoadingScreen from "./components/LoadingScreen";
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
 
-const queryClient = new QueryClient();
-
-const App = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const lenisRef = useRef<Lenis | null>(null);
-
-  useEffect(() => {
-    if (isLoading) return;
-
-    // Initialize Lenis for smooth scrolling
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
-      infinite: false,
-      lerp: 0.1,
-      syncTouch: true,
-      syncTouchLerp: 0.075,
-    });
-
-    lenisRef.current = lenis;
-
-    // Animation frame loop
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    // Cleanup
-    return () => {
-      lenis.destroy();
-      lenisRef.current = null;
-    };
-  }, [isLoading]);
-
+function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
-        {!isLoading && (
-          <>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </>
-        )}
-      </TooltipProvider>
-    </QueryClientProvider>
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.tsx</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
   );
-};
+}
 
 export default App;
