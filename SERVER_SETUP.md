@@ -2,53 +2,59 @@
 
 ## Installation
 
-1. Install the backend dependencies:
-
 ```bash
 npm install
 ```
 
 ## Configuration
 
-1. Create a `.env` file in the root directory:
+Create a `.env` file in the root directory (a template is already provided):
 
 ```env
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
-SMTP_USER=your-email@gmail.com
-SMTP_PASS=your-app-password
+SMTP_USER=your-gmail@gmail.com
+SMTP_PASS=your-gmail-app-password
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/YOUR/WEBHOOK/URL
 PORT=3001
 ```
 
-## Gmail Setup (if using Gmail)
+## Gmail Setup
 
-1. Enable 2-Factor Authentication on your Google account
-2. Generate an App Password:
-   - Go to Google Account settings
-   - Security → 2-Step Verification → App passwords
-   - Generate a new app password for "Mail"
-   - Use this password in `SMTP_PASS`
+1. Enable **2-Factor Authentication** on your Google account.
+2. Go to **Google Account → Security → App Passwords**.
+3. Generate an App Password for "Mail" and copy it into `SMTP_PASS`.
 
-## Running the Server
+## Slack Webhook Setup
 
-1. Start the backend server:
+1. Go to [api.slack.com/apps](https://api.slack.com/apps) and create (or open) your Slack app.
+2. Navigate to **Incoming Webhooks** and toggle it **On**.
+3. Click **Add New Webhook to Workspace**, choose your channel, and authorize.
+4. Copy the generated Webhook URL into `SLACK_WEBHOOK_URL`.
+
+On every form submission, Slack will receive a rich block message with the full contact details.
+
+## API Endpoints
+
+| Endpoint | Form | Description |
+|---|---|---|
+| `POST /api/send-email` | Multi-step contact form | Emails + Slack for full consultation request |
+| `POST /api/contact` | Simple contact form | Emails + Slack for quick contact message |
+
+## Running Locally
 
 ```bash
+# Terminal 1 – backend
 npm run server
-```
 
-2. In a separate terminal, start the React app:
-
-```bash
+# Terminal 2 – React app
 npm start
 ```
 
-The server will run on `http://localhost:3001` and the React app on `http://localhost:3000`.
+Server: `http://localhost:3001` · React app: `http://localhost:3000`
 
 ## Production Deployment
 
-For production, you'll need to:
-
-1. Deploy the server separately (e.g., Heroku, Railway, AWS)
-2. Update the API URL in `MultiStepContactForm.tsx` to point to your production server
-3. Set environment variables on your hosting platform
+1. Deploy `server.js` separately (e.g., Railway, Render, Heroku).
+2. Set all `.env` variables on your hosting platform.
+3. Update the API URL in `MultiStepContactForm.tsx` (line ~151) and add `REACT_APP_API_URL=https://your-server.com` to `ContactForm.tsx` env.

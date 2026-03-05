@@ -10,6 +10,8 @@ import listIcon from "../../images/icon/list-icon.svg";
 import messageIcon from "../../images/icon/messages-icon.svg";
 import arrowIcon from "../../images/icon/rotate-arrow-black02.svg";
 
+const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:3001";
+
 const ContactForm: React.FC = () => {
   const [forms, setForms] = useState({
     name: "",
@@ -23,6 +25,9 @@ const ContactForm: React.FC = () => {
   const [validator] = useState(
     new SimpleReactValidator({ className: "errorMessage" })
   );
+
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [statusMessage, setStatusMessage] = useState("");
 
   const changeHandler = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -39,24 +44,45 @@ const ContactForm: React.FC = () => {
     setForms({ ...forms, file });
   };
 
-  const submitHandler = (e: React.FormEvent) => {
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (validator.allValid()) {
-      console.log("✅ Form submitted:", forms);
-      alert("Form submitted successfully!");
-
-      setForms({
-        name: "",
-        email: "",
-        phone: "",
-        service: "",
-        message: "",
-        file: null,
-      });
-      validator.hideMessages();
-    } else {
+    if (!validator.allValid()) {
       validator.showMessages();
+      return;
+    }
+
+    setSubmitStatus("loading");
+    setStatusMessage("");
+
+    try {
+      const response = await fetch(`${API_BASE}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: forms.name,
+          email: forms.email,
+          phone: forms.phone,
+          service: forms.service,
+          message: forms.message,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitStatus("success");
+        setStatusMessage("✅ Message sent! We'll be in touch soon.");
+        setForms({ name: "", email: "", phone: "", service: "", message: "", file: null });
+        validator.hideMessages();
+      } else {
+        setSubmitStatus("error");
+        setStatusMessage("❌ Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      console.error("Contact form error:", err);
+      setSubmitStatus("error");
+      setStatusMessage("❌ Could not reach the server. Please try again later.");
     }
   };
 
@@ -123,7 +149,7 @@ const ContactForm: React.FC = () => {
           </div>
         </div>
 
-        {/* Select Field */}
+        {/* Select Service */}
         <div className="col-lg-12 col-md-12 mt-20">
           <div className="xb-input-field xb-select-field">
             <select
@@ -160,10 +186,27 @@ const ContactForm: React.FC = () => {
         </div>
       </div>
 
+      {/* Status message */}
+      {submitStatus !== "idle" && (
+        <p
+          style={{
+            marginTop: "16px",
+            fontWeight: 500,
+            color: submitStatus === "success" ? "#4caf50" : submitStatus === "error" ? "#f44336" : "#aaa",
+          }}
+        >
+          {submitStatus === "loading" ? "Sending…" : statusMessage}
+        </p>
+      )}
+
       {/* Submit Button */}
       <div className="form-submit-btn mt-35">
-        <button type="submit" className="thm-btn form-btn">
-          Submit Here
+        <button
+          type="submit"
+          className="thm-btn form-btn"
+          disabled={submitStatus === "loading"}
+        >
+          {submitStatus === "loading" ? "Sending…" : "Submit Here"}
           <span className="xb-icon">
             <img src={arrowIcon} alt="arrow" />
             <img src={arrowIcon} alt="arrow" />
