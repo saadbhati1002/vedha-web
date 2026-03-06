@@ -14,12 +14,12 @@ import singleImg3 from "../images/service-single/single3.jpg";
 import singleImg4 from "../images/service-single/single4.jpg";
 
 export interface Service {
-  id: string;     
-  title: string;      
-  slug: string;       
-  description: string; 
-  simg: string;        
-  ssImg: string;      
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  simg: string;
+  ssImg: string;
 }
 
 const Services: Service[] = [

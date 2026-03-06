@@ -6527,6 +6527,7 @@ Drop Down menu end
     .xb-service-wrap {
       flex-wrap: wrap; } }
 
+<<<<<<< HEAD
 @media (max-width: 600px) {
   .xb-service-wrap {
     flex-direction: column;
@@ -6659,6 +6660,8 @@ Drop Down menu end
   }
 }
 
+=======
+>>>>>>> development
 .service-vertical-text {
   transition: all 0.3s ease; }
   @media (max-width: 767px) {

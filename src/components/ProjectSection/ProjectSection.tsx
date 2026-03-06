@@ -70,9 +70,18 @@ const ProjectSection: React.FC = () => {
             We guide your journey from start to scale with strategy, tech, and a touch of clever.
           </h2>
           <div className="xb-heading-btn d-inline">
+<<<<<<< HEAD
             <button 
               className="thm-btn agency-btn" 
               onClick={() => navigate("/contact")}
+=======
+            <button
+              className="thm-btn agency-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/contact-us');
+              }}
+>>>>>>> development
               type="button"
             >
               <span className="text">know more</span>

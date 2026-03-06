@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
 import LightPillar from "../reactbits/LightPillar";
 import vedhaLogo from "../../images/logo/vedha-icon.svg";
@@ -6,11 +7,24 @@ import vedhaLogo from "../../images/logo/vedha-icon.svg";
 const HeroSection: React.FC = () => {
   const [logoOpacity, setLogoOpacity] = useState(0);
   const navigate = useNavigate();
+=======
+import LightPillar from "../reactbits/LightPillar";
+import { useNavigate } from "react-router-dom";
+import vedhaLogo from "../../images/logo/vedha-icon.svg";
+
+const HeroSection: React.FC = () => {
+  const navigate = useNavigate();
+  const [logoOpacity, setLogoOpacity] = useState(0);
+>>>>>>> development
 
   useEffect(() => {
     // Apply very light gradient background using secondary dark color (#1A1B1F)
     const gradient = "linear-gradient(180deg, #1A1B1F 0%, #1C1D21 30%, #1D1E22 50%, #1C1D21 70%, #1A1B1F 100%)";
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> development
     const sectionEl = document.querySelector<HTMLElement>(".hero");
     if (sectionEl) {
       sectionEl.style.background = gradient;
@@ -20,17 +34,29 @@ const HeroSection: React.FC = () => {
     // Animate logo fade-in
     const fadeInDuration = 2000; // 2 seconds
     const startTime = Date.now();
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> development
     const animate = () => {
       const elapsed = Date.now() - startTime;
       const progress = Math.min(elapsed / fadeInDuration, 1);
       setLogoOpacity(progress * 0.3); // Fade to 0.3 opacity
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> development
       if (progress < 1) {
         requestAnimationFrame(animate);
       }
     };
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> development
     // Start animation after a short delay
     setTimeout(() => {
       requestAnimationFrame(animate);
@@ -84,9 +110,15 @@ const HeroSection: React.FC = () => {
                 From web development to cloud solutions, mobile apps to digital transformation—we deliver end-to-end tech services that drive growth and innovation.
               </p>
               <div className="hero-btn">
+<<<<<<< HEAD
                 <button 
                   className="thm-btn agency-btn" 
                   onClick={() => navigate("/contact")}
+=======
+                <button
+                  className="thm-btn agency-btn"
+                  onClick={() => navigate('/contact-us')}
+>>>>>>> development
                   type="button"
                 >
                   <span className="text">Start Your Project</span>

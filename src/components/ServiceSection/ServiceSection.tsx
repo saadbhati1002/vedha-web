@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
+=======
+import { Link, useNavigate } from "react-router-dom";
+>>>>>>> development
 import arrowIcon from "../../images/icon/rotate-arrow-black.svg";
 
 // Service images
@@ -24,46 +28,71 @@ const services: ServiceItem[] = [
     title: "AI SaaS Products",
     desc: "Use AI to target audiences, personalize campaigns, and analyze data for better engagement and results.",
     img: img01,
+<<<<<<< HEAD
     link: "/contact",
+=======
+    link: "/service-details",
+>>>>>>> development
   },
   {
     id: 2,
     title: "Technology Development",
     desc: "We turn complex ideas into clear, launchable products using AI and advanced analytics—empowering smarter decisions.",
     img: img02,
+<<<<<<< HEAD
     link: "/contact",
+=======
+    link: "/service-details",
+>>>>>>> development
   },
   {
     id: 3,
     title: "Ecommerce Development",
     desc: "We create intelligent chatbots and virtual assistants that improve customer support and automate interactions 24/7.",
     img: img03,
+<<<<<<< HEAD
     link: "/contact",
+=======
+    link: "/service-details",
+>>>>>>> development
   },
   {
     id: 4,
     title: "Branding and Identity",
     desc: "Shaping brands that look good, feel right, and stand out.",
     img: img04,
+<<<<<<< HEAD
     link: "/contact",
+=======
+    link: "/service-details",
+>>>>>>> development
   },
   {
     id: 5,
     title: "Technology Consulting",
     desc: "We guide businesses in adopting AI strategies, optimizing processes, and integrating technologies for lasting success.",
     img: img05,
+<<<<<<< HEAD
     link: "/contact",
+=======
+    link: "/service-details",
+>>>>>>> development
   },
   {
     id: 6,
     title: "Content & Marketing",
     desc: "Creating strategic content and marketing campaigns that engage audiences, strengthen brands, and drive measurable growth.",
     img: img06,
+<<<<<<< HEAD
     link: "/contact",
+=======
+    link: "/service-details",
+>>>>>>> development
   },
 ];
 
 const ServiceSection: React.FC = () => {
+<<<<<<< HEAD
   const [activeId, setActiveId] = useState<number>(1);
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
@@ -75,26 +104,42 @@ const ServiceSection: React.FC = () => {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+=======
+  const navigate = useNavigate();
+  const [activeId, setActiveId] = useState<number>(1);
+>>>>>>> development
 
   useEffect(() => {
     // Apply very light gradient background using secondary dark color (#1A1B1F)
     // Very subtle gradient from dark to slightly lighter and back
     const gradient = "linear-gradient(180deg, #1A1B1F 0%, #1C1D21 30%, #1D1E22 50%, #1C1D21 70%, #1A1B1F 100%)";
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> development
     // Top section (header area)
     const sectionEl = document.querySelector<HTMLElement>(".service");
     if (sectionEl) {
       sectionEl.style.background = gradient;
       sectionEl.style.backgroundImage = "none";
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> development
     // Middle section (service wrap container)
     const bgEl = document.querySelector<HTMLElement>(".xb-service-wrap");
     if (bgEl) {
       bgEl.style.background = gradient;
       bgEl.style.backgroundImage = "none";
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> development
     // Bottom section (service items) - update to match gradient theme
     const serviceItems = document.querySelectorAll<HTMLElement>(".xb-service-item");
     serviceItems.forEach((item) => {
@@ -265,18 +310,43 @@ const ServiceSection: React.FC = () => {
             key={service.id}
             className={`xb-service-item xb-border xb-mouseenter ${activeId === service.id ? "active" : ""
               }`}
+<<<<<<< HEAD
             onMouseEnter={() => !isMobile && setActiveId(service.id)}
             onClick={() => isMobile && setActiveId(activeId === service.id ? 0 : service.id)}
+=======
+            onMouseEnter={() => setActiveId(service.id)}
+>>>>>>> development
           >
             <div className="xb-item--inner">
               <div className="xb-item--item">
                 <div className="xb-item--head-item">
                   <h3 className="xb-item--title border-effect">
+<<<<<<< HEAD
                     <Link to={service.link}>
                       {service.title}
                     </Link>
                   </h3>
                   <Link className="xb-item--icon" to={service.link}>
+=======
+                    <Link
+                      to={service.link}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate('/contact-us');
+                      }}
+                    >
+                      {service.title}
+                    </Link>
+                  </h3>
+                  <Link
+                    className="xb-item--icon"
+                    to={service.link}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onServiceClick?.(service.title);
+                    }}
+                  >
+>>>>>>> development
                     <img src={arrowIcon} alt="arrow" />
                   </Link>
                 </div>
@@ -284,7 +354,18 @@ const ServiceSection: React.FC = () => {
                 <div className="img-hove-effect">
                   <div className="xb-item--img xb-img">
                     {[...Array(4)].map((_, i) => (
+<<<<<<< HEAD
                       <Link to={service.link} key={i}>
+=======
+                      <Link
+                        to={service.link}
+                        key={i}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigate('/contact-us');
+                        }}
+                      >
+>>>>>>> development
                         <img src={service.img} alt={service.title} />
                       </Link>
                     ))}
@@ -294,11 +375,32 @@ const ServiceSection: React.FC = () => {
 
               <div className="service-vertical-text">
                 <h3 className="xb-item--title">
+<<<<<<< HEAD
                   <Link to={service.link}>
                     {service.title}
                   </Link>
                 </h3>
                 <Link className="xb-icon" to={service.link}>
+=======
+                  <Link
+                    to={service.link}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate('/contact-us');
+                    }}
+                  >
+                    {service.title}
+                  </Link>
+                </h3>
+                <Link
+                  className="xb-icon"
+                  to={service.link}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onServiceClick?.(service.title);
+                  }}
+                >
+>>>>>>> development
                   <svg
                     width="31"
                     height="31"

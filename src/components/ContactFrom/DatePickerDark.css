@@ -1,0 +1,178 @@
+/* react-datepicker dark theme override */
+
+/* Popper & Calendar container */
+.react-datepicker-popper {
+    z-index: 10000 !important;
+}
+
+.react-datepicker {
+    background: #13161e !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 16px !important;
+    font-family: var(--font-body), sans-serif !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6) !important;
+    overflow: hidden;
+    padding-bottom: 10px;
+    color: #fff !important;
+}
+
+/* Header */
+.react-datepicker__header {
+    background: #1a1e2a !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 16px 0 12px !important;
+    border-radius: 0 !important;
+}
+
+.react-datepicker__current-month {
+    color: #fff !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.5px;
+}
+
+.react-datepicker__day-name {
+    color: rgba(255, 255, 255, 0.4) !important;
+    font-size: 12px !important;
+    width: 2.2rem !important;
+}
+
+/* Navigation arrows */
+.react-datepicker__navigation-icon::before {
+    border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.react-datepicker__navigation:hover .react-datepicker__navigation-icon::before {
+    border-color: #9acd32 !important;
+}
+
+/* Days */
+.react-datepicker__day {
+    color: #e0e0e0 !important;
+    width: 2.2rem !important;
+    line-height: 2.2rem !important;
+    border-radius: 50% !important;
+    font-size: 13px !important;
+    transition: all 0.15s ease !important;
+}
+
+.react-datepicker__day:hover {
+    background: rgba(154, 205, 50, 0.15) !important;
+    color: #9acd32 !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+    background: #6b7f1a !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+}
+
+.react-datepicker__day--today {
+    color: #9acd32 !important;
+    font-weight: 700 !important;
+}
+
+.react-datepicker__day--disabled {
+    color: rgba(255, 255, 255, 0.2) !important;
+    cursor: not-allowed !important;
+}
+
+/* Triangle arrow on popper */
+.react-datepicker__triangle {
+    display: none !important;
+}
+
+/* Time picker specific */
+.react-datepicker--time-only {
+    width: 200px !important;
+}
+
+.react-datepicker-time__header {
+    color: #fff !important;
+    font-size: 14px !important;
+    background: #1a1e2a !important;
+    padding: 12px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.react-datepicker__time-container {
+    width: 200px !important;
+    border-left: none !important;
+}
+
+.react-datepicker__time {
+    background: #13161e !important;
+}
+
+.react-datepicker__time-box {
+    width: 100% !important;
+}
+
+.react-datepicker__time-list-item {
+    color: #e0e0e0 !important;
+    font-size: 13px !important;
+    padding: 8px 12px !important;
+    transition: all 0.15s !important;
+}
+
+.react-datepicker__time-list-item:hover {
+    background: rgba(154, 205, 50, 0.15) !important;
+    color: #9acd32 !important;
+}
+
+.react-datepicker__time-list-item--selected {
+    background: #6b7f1a !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+}
+
+/* Input wrapper icon spacing */
+.date-picker-wrapper,
+.time-picker-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* Make react-datepicker internal wrapper full width */
+.date-picker-wrapper .react-datepicker-wrapper,
+.time-picker-wrapper .react-datepicker-wrapper {
+    width: 100%;
+}
+
+.date-picker-wrapper .react-datepicker__input-container,
+.time-picker-wrapper .react-datepicker__input-container {
+    width: 100%;
+}
+
+.date-picker-wrapper input,
+.time-picker-wrapper input {
+    width: 100%;
+    padding: 14px 44px 14px 14px;
+    border-radius: 8px;
+    border: 1px solid #2a2f38;
+    background: transparent !important;
+    color: #fff;
+    font-size: 16px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: var(--font-body), sans-serif;
+}
+
+.date-picker-wrapper input:focus,
+.time-picker-wrapper input:focus {
+    outline: none;
+    border-color: #6b7f1a;
+    box-shadow: 0 0 0 1px #6b7f1a;
+}
+
+.picker-icon {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+    font-size: 16px;
+    z-index: 1;
+}
